@@ -7,8 +7,16 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace JuansList.Models
 {
-    // Add profile data for application users by adding properties to the ApplicationUser class
-    public class ApplicationUser : IdentityUser
+    public class Category
     {
+        [Key]
+        public int CategoryId { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Description { get; set; }
+
     }
 }

@@ -86,6 +86,9 @@ namespace JuansList
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
+            //uncomment line below when ready to seed DB
+            //DbInitializer.Initialize(app.ApplicationServices);
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
