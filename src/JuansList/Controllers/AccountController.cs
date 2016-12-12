@@ -89,7 +89,17 @@ namespace JuansList.Controllers
         // GET: /Account/Register
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register(string returnUrl = null)
+        public IActionResult VendorRegister(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        //
+        // GET: /Account/Register
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult CustomerRegister(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             return View();
@@ -100,13 +110,26 @@ namespace JuansList.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        public async Task<IActionResult> VendorRegister(VendorRegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var VendorUser = new VendorUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    EmailAddress = model.EmailAddress,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    CompanyName = model.CompanyName,
+                    StreetAddress = model.StreetAddress,
+                    City = model.City,
+                    State = model.State,
+                    Zip = model.Zip,
+                    ProfileImage = model.ProfileImage
+                };
+                var result = await _userManager.CreateAsync(VendorUser, model.Password);
                 if (result.Succeeded)
                 {
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
@@ -115,7 +138,48 @@ namespace JuansList.Controllers
                     //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                     //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    await _signInManager.SignInAsync(VendorUser, isPersistent: false);
+                    _logger.LogInformation(3, "Vendor User created a new account with password.");
+                    return RedirectToLocal(returnUrl);
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CustomerRegister(CustomerRegisterViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+                var CustomerUser = new CustomerUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    EmailAddress = model.EmailAddress,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    StreetAddress = model.StreetAddress,
+                    City = model.City,
+                    State = model.State,
+                    Zip = model.Zip,
+                    ProfileImage = model.ProfileImage
+                };
+                var result = await _userManager.CreateAsync(CustomerUser, model.Password);
+                if (result.Succeeded)
+                {
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
+                    // Send an email with this link
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                    //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
+                    //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
+                    await _signInManager.SignInAsync(CustomerUser, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
                     return RedirectToLocal(returnUrl);
                 }

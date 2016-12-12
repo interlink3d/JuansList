@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet-JuansList-f8fc9f93-32f5-4d84-ad0c-f37f31feb6a7",
 
   "dependencies": {
@@ -41,10 +41,11 @@
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
-    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc":  {
+    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
       "version": "1.0.0-preview2-final",
       "type": "build"
-    }
+    },
+    "xunit": "2.1.0"
   },
 
   "tools": {

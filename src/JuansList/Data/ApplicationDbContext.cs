@@ -22,5 +22,16 @@ namespace JuansList.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+        public DbSet<VendorUser> VendorUser { get; set; }
+        public DbSet<CustomerUser> CustomerUser { get; set; }
+        public DbSet<Album> Album { get; set; }
+        public DbSet<AlbumImages> AlbumImages { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<VendorCategory> VendorCategory { get; set; }
+        public DbSet<Coupon> Coupon { get; set; }
+        public DbSet<Estimate> Estimate { get; set; }
+        public DbSet<Message> Message { get; set; }
+        public DbSet<Review> Review { get; set; }
+
     }
 }
