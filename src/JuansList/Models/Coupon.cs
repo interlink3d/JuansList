@@ -19,7 +19,7 @@ namespace JuansList.Models
         public string Content { get; set; }
 
         [Required]
-        public VendorUser VUser { get; set; }
+        public VendorUser VendorUser { get; set; }
 
     }
 }

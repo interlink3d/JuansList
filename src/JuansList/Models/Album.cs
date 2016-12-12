@@ -17,7 +17,7 @@ namespace JuansList.Models
         public string Title { get; set; }
 
         [Required]
-        public VendorUser VUser { get; set; }
+        public VendorUser VendorUser { get; set; }
 
         public ICollection<AlbumImages> Images {get; set;}
 
