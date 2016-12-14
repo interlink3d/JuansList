@@ -13,9 +13,29 @@ using JuansList.ViewModels;
 
 namespace JuansList.Controllers
 {
-    public class VendorController : Controller
+    public class AlbumsController : Controller
     {
-        public IActionResult Index()
+       
+        [HttpPost]
+        public IActionResult AddAlbum()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddImage()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult GetAlbums()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult GetImages()
         {
             return View();
         }

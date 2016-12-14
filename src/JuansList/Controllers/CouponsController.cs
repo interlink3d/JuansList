@@ -13,9 +13,14 @@ using JuansList.ViewModels;
 
 namespace JuansList.Controllers
 {
-    public class VendorController : Controller
+    public class CouponsController : Controller
     {
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult AddCoupon()
         {
             return View();
         }

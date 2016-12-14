@@ -13,7 +13,7 @@ using JuansList.ViewModels;
 
 namespace JuansList.Controllers
 {
-    public class VendorController : Controller
+    public class CustomerController : Controller
     {
         public IActionResult Index()
         {
