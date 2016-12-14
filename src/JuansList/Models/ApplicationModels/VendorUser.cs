@@ -19,6 +19,9 @@ namespace JuansList.Models
         public string CompanyName { get; set; }
 
         [Required]
+        public string Description { get; set; }
+
+        [Required]
         public string EmailAddress { get; set; }
 
         [Required]
@@ -36,6 +39,8 @@ namespace JuansList.Models
         public string ProfileImage { get; set; }
 
         public int? Rating { get; set; }
+
+        public ICollection<VendorCategory> VendorCategories { get; set; }
 
     }
 }

@@ -38,6 +38,10 @@ namespace JuansList.Models.AccountViewModels
         public string CompanyName { get; set; }
 
         [Required]
+        [Display(Name = "Company Description")]
+        public string Description { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Preferred Email")]
         public string EmailAddress { get; set; }
@@ -62,5 +66,8 @@ namespace JuansList.Models.AccountViewModels
         [DataType(DataType.ImageUrl)]
         public string ProfileImage { get; set; }
 
+        [Required]
+        [Display(Name = "Company Categories")]
+        public ICollection<VendorCategory> VendorCategories { get; set; } 
     }
 }

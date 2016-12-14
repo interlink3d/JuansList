@@ -123,6 +123,7 @@ namespace JuansList.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     CompanyName = model.CompanyName,
+                    Description = model.Description,
                     StreetAddress = model.StreetAddress,
                     City = model.City,
                     State = model.State,

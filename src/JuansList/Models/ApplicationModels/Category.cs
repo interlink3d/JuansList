@@ -18,5 +18,7 @@ namespace JuansList.Models
         [Required]
         public string Description { get; set; }
 
+        public ICollection<VendorCategory> VendorCategories { get; set; }
+
     }
 }
