@@ -18,6 +18,9 @@ namespace JuansList.Models
         public DateTime DateStamp { get; set; }
 
         [Required]
+        public string VendorUserId { get; set; }
+
+        [Required]
         public VendorUser VendorUser { get; set; }
 
         [Required]

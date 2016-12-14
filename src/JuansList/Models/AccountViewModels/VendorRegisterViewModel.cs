@@ -66,7 +66,6 @@ namespace JuansList.Models.AccountViewModels
         [DataType(DataType.ImageUrl)]
         public string ProfileImage { get; set; }
 
-        [Required]
         [Display(Name = "Company Categories")]
         public ICollection<VendorCategory> VendorCategories { get; set; } 
     }
