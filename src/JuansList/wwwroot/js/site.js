@@ -1,1 +1,6 @@
-﻿// Write your Javascript code.
+﻿$(document).ready(function () {
+    $('.carousel').carousel(
+        { dist: -50}
+        );
+});
+

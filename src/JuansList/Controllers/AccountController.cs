@@ -26,6 +26,7 @@ namespace JuansList.Controllers
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+
             IEmailSender emailSender,
             ISmsSender smsSender,
             ILoggerFactory loggerFactory)

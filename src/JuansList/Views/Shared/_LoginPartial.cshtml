@@ -6,22 +6,21 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-            </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
-            </li>
+    <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="right">
+        <ul class="right">
+            <li><a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="Index" class="waves-effect waves-light btn">Home</a></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="About" class="waves-effect waves-light btn">About</a></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="Contact" class="waves-effect waves-light btn">Contact</a></li>
+            <li><button type="submit" class="waves-effect waves-light btn ">Log off</button></li>
         </ul>
     </form>
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="" asp-controller="Account" asp-action="VendorRegister">Vendor Registration</a></li>
-        <li><a asp-area="" asp-controller="Account" asp-action="CustomerRegister">Customer Registration</a></li>
-        <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
+    <ul class="right">
+        <li><a asp-area="" asp-controller="Account" asp-action="VendorRegister" class="waves-effect waves-light btn">Vendor Registration</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="CustomerRegister" class="waves-effect waves-light btn">Customer Registration</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Login" class="waves-effect waves-light btn">Log in</a></li>
     </ul>
 }
