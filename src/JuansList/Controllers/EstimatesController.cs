@@ -18,35 +18,53 @@ namespace JuansList.Controllers
         private ApplicationDbContext context;
         // Private variable for userManager helper function
         private readonly UserManager<VendorUser> _userManager;
+        private readonly UserManager<CustomerUser> _userManager2;
 
         //Constructor functions that takes both context AND the userManager object
         //and sets them to the private variables above
-        public EstimatesController(UserManager<VendorUser> userManager, ApplicationDbContext ctx)
+        public EstimatesController(UserManager<VendorUser> userManager, UserManager<CustomerUser> userManager2, ApplicationDbContext ctx)
         {
             _userManager = userManager;
+            _userManager2 = userManager2;
             context = ctx;
         }
 
         // This task retrieves the currently authenticated user
         private Task<VendorUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-
+        private Task<CustomerUser> GetCurrentUserAsync2() => _userManager2.GetUserAsync(HttpContext.User);
 
         [HttpGet]
-        public IActionResult CreateEstimate()
+        public IActionResult AddEstimate()
         {
+            Estimate model = new Estimate();
 
-            //need to create a createestimateviewmodel to populate form and pass in model to the return
-
-            return View();
+            return View(model);
         }
 
         [HttpPost]
-        public async Task <IActionResult> CreateEstimate(Estimate estimate)
+        public async Task <IActionResult> AddEstimate(Estimate estimate)
         {
-            var VendorUser = await GetCurrentUserAsync();
-            estimate.VendorUser = VendorUser;
+            ModelState.Remove("VendorUser");
+            ModelState.Remove("CustomerUser");
 
-            return View();
+            if (ModelState.IsValid)
+            {
+                var VendorUser = await GetCurrentUserAsync();
+                estimate.VendorUser = VendorUser;
+
+                context.Add(estimate);
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("AddEstimate", "Estimates");
+            }
         }
 
         [HttpGet]

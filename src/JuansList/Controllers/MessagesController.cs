@@ -15,6 +15,22 @@ namespace JuansList.Controllers
 {
     public class MessagesController : Controller
     {
+        private ApplicationDbContext context;
+        // Private variable for userManager helper function
+        private readonly UserManager<VendorUser> _userManager;
+
+        //Constructor functions that takes both context AND the userManager object
+        //and sets them to the private variables above
+        public MessagesController(UserManager<VendorUser> userManager, ApplicationDbContext ctx)
+        {
+            _userManager = userManager;
+            context = ctx;
+        }
+
+        // This task retrieves the currently authenticated user
+        private Task<VendorUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
+
         public IActionResult Index()
         {
             return View();
