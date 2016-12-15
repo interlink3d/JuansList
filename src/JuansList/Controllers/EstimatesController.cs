@@ -68,13 +68,29 @@ namespace JuansList.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetEstimates()
+        public async Task <IActionResult> GetEstimates()
+        {
+            var model = new AllEstimatesViewModel();
+            model.Estimates = await context.Estimate
+                .OrderBy(d => d.DateStart).ToListAsync();
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult GetEstimate()
         {
             return View();
         }
 
         [HttpGet]
-        public IActionResult GetEstimate()
+        public IActionResult EditEstimate()
+        {
+            return View();
+        }
+
+        [HttpPut]
+        public IActionResult UpdateEstimate()
         {
             return View();
         }
