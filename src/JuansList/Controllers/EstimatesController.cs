@@ -18,47 +18,132 @@ namespace JuansList.Controllers
         private ApplicationDbContext context;
         // Private variable for userManager helper function
         private readonly UserManager<VendorUser> _userManager;
+        private readonly UserManager<CustomerUser> _userManager2;
 
         //Constructor functions that takes both context AND the userManager object
         //and sets them to the private variables above
-        public EstimatesController(UserManager<VendorUser> userManager, ApplicationDbContext ctx)
+        public EstimatesController(UserManager<VendorUser> userManager, UserManager<CustomerUser> userManager2, ApplicationDbContext ctx)
         {
             _userManager = userManager;
+            _userManager2 = userManager2;
             context = ctx;
         }
 
         // This task retrieves the currently authenticated user
         private Task<VendorUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-
+        private Task<CustomerUser> GetCurrentUserAsync2() => _userManager2.GetUserAsync(HttpContext.User);
 
         [HttpGet]
-        public IActionResult CreateEstimate()
+        public IActionResult AddEstimate()
         {
+            Estimate model = new Estimate();
 
-            //need to create a createestimateviewmodel to populate form and pass in model to the return
-
-            return View();
+            return View(model);
         }
 
         [HttpPost]
-        public async Task <IActionResult> CreateEstimate(Estimate estimate)
+        public async Task <IActionResult> AddEstimate(Estimate estimate)
         {
-            var VendorUser = await GetCurrentUserAsync();
-            estimate.VendorUser = VendorUser;
+            ModelState.Remove("VendorUser");
+            ModelState.Remove("CustomerUser");
 
-            return View();
+            if (ModelState.IsValid)
+            {
+                var VendorUser = await GetCurrentUserAsync();
+                estimate.VendorUser = VendorUser;
+
+                context.Add(estimate);
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("AddEstimate", "Estimates");
+            }
         }
 
         [HttpGet]
-        public IActionResult GetEstimates()
+        public async Task <IActionResult> GetEstimates()
         {
-            return View();
+            var model = new AllEstimatesViewModel();
+            model.Estimates = await context.Estimate
+                .OrderBy(d => d.DateStart).ToListAsync();
+
+            return View(model);
         }
 
         [HttpGet]
-        public IActionResult GetEstimate()
+        public async Task<IActionResult> EstimateDetail([FromRoute] int id)
         {
-            return View();
+            var e = await context.Estimate
+                    .SingleOrDefaultAsync(m => m.EstimateId == id);
+
+            if (e == null)
+            {
+                return NotFound();
+            }
+
+            var model = new EstimateDetailViewModel()
+            {
+                SingleEstimate = e
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task <IActionResult> UpdateEstimate(Estimate SingleEstimate, [FromRoute] int id)
+        {
+            Estimate est = context.Estimate.Where(i => i.EstimateId == id).SingleOrDefault();
+
+            est.VendorUser = await GetCurrentUserAsync();
+            est.Title = SingleEstimate.Title;
+            est.Description = SingleEstimate.Description;
+            est.Price = SingleEstimate.Price;
+            est.DateStart = SingleEstimate.DateStart;
+            est.DateEnd = SingleEstimate.DateEnd;
+
+            if (ModelState.IsValid)
+            {
+                context.Add(est);
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("GetEstimates", "Estimates");
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public IActionResult DeleteEstimate([FromRoute] int id)
+        {
+            var est =
+                from e in context.Estimate
+                where e.EstimateId == id
+                select e;
+
+            context.Estimate.Remove(est.SingleOrDefault());
+
+            if (ModelState.IsValid)
+            {
+                context.SaveChanges();
+                return RedirectToAction("GetEstimates", "Estimates");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }
