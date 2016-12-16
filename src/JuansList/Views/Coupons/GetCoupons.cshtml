@@ -1,0 +1,32 @@
+﻿@model JuansList.ViewModels.AllCouponsViewModel
+
+@{
+    ViewData["Title"] = "All Coupons";
+}
+
+<br>
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+
+<div class="row">
+    <div class="col m2">Title</div>
+    <div class="col m4">Description</div>
+</div>
+
+@foreach (var item in Model.Coupons)
+{
+    <div class="row">
+        <div class="col m2"><a asp-action="CouponDetail" asp-route-id="@item.CouponId">@Html.DisplayFor(modelItem => item.Title)</a></div>
+        <div class="col m4">@Html.DisplayFor(modelItem => item.Content)</div>
+        <div class="col m1">
+            <a asp-controller="Coupons" asp-action="DeleteCoupon" asp-route-id="@item.CouponId">Delete</a>
+        </div>
+    </div>
+    <br />
+}
+ 
+<br />   
+<div class="col m4 ">
+    <a asp-controller="Coupons" asp-action="AddCoupon" class="waves-effect waves-light btn">Add Coupon</a>
+</div>

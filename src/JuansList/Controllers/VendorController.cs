@@ -35,9 +35,16 @@ namespace JuansList.Controllers
         public async Task <IActionResult> Profile()
         {
             var User = await GetCurrentUserAsync();
+            var VendorUID = User.Id;
 
             var model = new VendorProfileViewModel();
             model.VendorUser = User;
+            model.Coupons = await context.Coupon
+                //.Where(v => v.VendorUser == User)
+                .OrderBy(t => t.Title).ToListAsync();
+
+            model.Albums = await context.Album
+                .OrderBy(a => a.Title).ToListAsync();
 
             return View(model);
         }
