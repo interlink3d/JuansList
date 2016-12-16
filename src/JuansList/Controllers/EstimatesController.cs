@@ -78,21 +78,72 @@ namespace JuansList.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetEstimate()
+        public async Task<IActionResult> EstimateDetail([FromRoute] int id)
         {
-            return View();
+            var e = await context.Estimate
+                    .SingleOrDefaultAsync(m => m.EstimateId == id);
+
+            if (e == null)
+            {
+                return NotFound();
+            }
+
+            var model = new EstimateDetailViewModel()
+            {
+                SingleEstimate = e
+            };
+
+            return View(model);
         }
 
-        [HttpGet]
-        public IActionResult EditEstimate()
+        [HttpPost]
+        public async Task <IActionResult> UpdateEstimate(Estimate SingleEstimate, [FromRoute] int id)
         {
-            return View();
+            Estimate est = context.Estimate.Where(i => i.EstimateId == id).SingleOrDefault();
+
+            est.VendorUser = await GetCurrentUserAsync();
+            est.Title = SingleEstimate.Title;
+            est.Description = SingleEstimate.Description;
+            est.Price = SingleEstimate.Price;
+            est.DateStart = SingleEstimate.DateStart;
+            est.DateEnd = SingleEstimate.DateEnd;
+
+            if (ModelState.IsValid)
+            {
+                context.Add(est);
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("GetEstimates", "Estimates");
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
-        [HttpPut]
-        public IActionResult UpdateEstimate()
+        public IActionResult DeleteEstimate([FromRoute] int id)
         {
-            return View();
+            var est =
+                from e in context.Estimate
+                where e.EstimateId == id
+                select e;
+
+            context.Estimate.Remove(est.SingleOrDefault());
+
+            if (ModelState.IsValid)
+            {
+                context.SaveChanges();
+                return RedirectToAction("GetEstimates", "Estimates");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

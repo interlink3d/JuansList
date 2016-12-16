@@ -9,13 +9,24 @@
 
 <hr />
 
+<div class="row">
+    <div class="col m2">Title</div>
+    <div class="col m4">Description</div>
+    <div class="col m1">Price</div>
+    <div class="col m2">Start Date</div>
+    <div class="col m2">End Date</div>
+</div>
+
 @foreach (var item in Model.Estimates)
 {
     <div class="row">
-        <div class="col m2"><a asp-action="" asp-route-id="@item.EstimateId">@Html.DisplayFor(modelItem => item.Title)</a></div>
+        <div class="col m2"><a asp-action="EstimateDetail" asp-route-id="@item.EstimateId">@Html.DisplayFor(modelItem => item.Title)</a></div>
         <div class="col m4">@Html.DisplayFor(modelItem => item.Description)</div>
         <div class="col m1">$@Html.DisplayFor(modelItem => item.Price)</div>
         <div class="col m2">@Html.DisplayFor(modelItem => item.DateStart)</div>
         <div class="col m2">@Html.DisplayFor(modelItem => item.DateEnd)</div>
+        <div class="col m1">
+            <a asp-controller="Estimates" asp-action="DeleteEstimate" asp-route-id="@item.EstimateId">Delete</a>
+        </div>
     </div>
 }
