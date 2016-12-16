@@ -1,0 +1,38 @@
+@model JuansList.ViewModels.VendorProfileViewModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Vendor Profile</title>
+</head>
+<body>
+
+<h4 class="center">Vendor Profile</h4>
+<div class="">
+    <div class="row">
+        <div class="col offset-m1 m4">
+            <ul>
+                <li>@Html.DisplayFor(model => model.VendorUser.FirstName) @Html.DisplayFor(model => model.VendorUser.LastName)</li>
+                <li>@Html.DisplayFor(model => model.VendorUser.CompanyName)</li>
+                <li>@Html.DisplayFor(model => model.VendorUser.StreetAddress)</li>
+                <li>@Html.DisplayFor(model => model.VendorUser.City), @Html.DisplayFor(model => model.VendorUser.State) @Html.DisplayFor(model => model.VendorUser.Zip)</li>
+            </ul>
+        </div>
+        <div class="col m6">
+            <img src="@Url.Content(Model.VendorUser.ProfileImage)" alt="Image" style="padding-top: 1em;" />
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col offset-m1 m4 ">
+            <a asp-controller="Estimates" asp-action="AddEstimate" class="waves-effect waves-light btn">Request Estimate</a>
+        </div>
+        <div class="col m4 ">
+            <a asp-controller="Messages" asp-action="AddMessage" class="waves-effect waves-light btn">Send Message</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

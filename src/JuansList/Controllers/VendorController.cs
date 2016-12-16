@@ -32,9 +32,14 @@ namespace JuansList.Controllers
         // This task retrieves the currently authenticated user
         private Task<VendorUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        public IActionResult Index()
+        public async Task <IActionResult> Profile()
         {
-            return View();
+            var User = await GetCurrentUserAsync();
+
+            var model = new VendorProfileViewModel();
+            model.VendorUser = User;
+
+            return View(model);
         }
 
 
