@@ -58,7 +58,7 @@ namespace JuansList.Controllers
             try
             {
                 context.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Profile", "Vendor");
             }
 
             catch (DbUpdateException)
