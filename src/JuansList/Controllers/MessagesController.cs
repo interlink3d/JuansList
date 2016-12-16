@@ -31,9 +31,115 @@ namespace JuansList.Controllers
         private Task<VendorUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult AddMessage()
         {
-            return View();
+            Message model = new Message();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMessage(Message message)
+        {
+            ModelState.Remove("VendorUser");
+            ModelState.Remove("VendorUserId");
+            ModelState.Remove("CustomerUser");
+
+            if (ModelState.IsValid)
+            {
+                var VendorUser = await GetCurrentUserAsync();
+                message.VendorUser = VendorUser;
+
+                context.Add(message);
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("Profile", "Vendor");
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("AddMessage", "Messages");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMessages()
+        {
+            var model = new AllMessagesViewModel();
+            model.Messages = await context.Message
+                .OrderBy(d => d.DateStamp).ToListAsync();
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MessageDetail([FromRoute] int id)
+        {
+            var m = await context.Message
+                    .SingleOrDefaultAsync(mi => mi.MessageId == id);
+
+            if (m == null)
+            {
+                return NotFound();
+            }
+
+            var model = new MessageDetailViewModel()
+            {
+                SingleMessage = m
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateMessage(Message SingleMessage, [FromRoute] int id)
+        {
+            Message msg = context.Message.Where(i => i.MessageId == id).SingleOrDefault();
+
+            msg.VendorUser = await GetCurrentUserAsync();
+            msg.Text = SingleMessage.Text;
+            msg.DateStamp = SingleMessage.DateStamp;
+           
+            if (ModelState.IsValid)
+            {
+                context.Add(msg);
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("GetMessages", "Messages");
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public IActionResult DeleteMessage([FromRoute] int id)
+        {
+            var msg =
+                from m in context.Message
+                where m.MessageId == id
+                select m;
+
+            context.Message.Remove(msg.SingleOrDefault());
+
+            if (ModelState.IsValid)
+            {
+                context.SaveChanges();
+                return RedirectToAction("GetMessages", "Messages");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

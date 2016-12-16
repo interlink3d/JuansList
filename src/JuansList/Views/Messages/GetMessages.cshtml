@@ -1,0 +1,26 @@
+﻿@model JuansList.ViewModels.AllMessagesViewModel
+
+@{
+    ViewData["Title"] = "All Messages";
+}
+
+<br>
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+
+<div class="row">
+    <div class="col m6">Message</div>
+    <div class="col m1">Sent On</div>
+</div>
+
+@foreach (var item in Model.Messages)
+{
+    <div class="row">
+        <div class="col m6"><a asp-action="MessageDetail" asp-route-id="@item.MessageId">@Html.DisplayFor(modelItem => item.Text)</a></div>
+        <div class="col m3">@Html.DisplayFor(modelItem => item.DateStamp)</div>
+        <div class="col m1">
+            <a asp-controller="Messages" asp-action="DeleteMessage" asp-route-id="@item.MessageId">Delete</a>
+        </div>
+    </div>
+}

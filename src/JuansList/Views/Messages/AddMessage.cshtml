@@ -1,0 +1,45 @@
+@model JuansList.Models.Message
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Message</title>
+</head>
+<body>
+
+<form asp-action="AddMessage">
+    <div class="form-horizontal">
+        <h4>Message</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Text" class="col m2 control-label"></label>
+            <div class="col m10">
+                <input asp-for="Text" class="form-control" />
+                <span asp-validation-for="Text" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateStamp" class="col m2 control-label"></label>
+            <div class="col m10">
+                <input asp-for="DateStamp" class="form-control" />
+                <span asp-validation-for="DateStamp" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col offset-m2 col m10">
+                <input type="submit" value="Send" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    @*<a asp-action="Index">Back to List</a>*@
+</div>
+
+</body>
+</html>
