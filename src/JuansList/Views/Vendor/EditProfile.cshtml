@@ -1,0 +1,42 @@
+﻿@model JuansList.ViewModels.EditVendorProfileViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit Coupon</title>
+</head>
+<body>
+
+    <form asp-controller="Vendor" asp-action="UpdateContact" asp-route-id="@Model.VendorUser.VendorUserId" method="post">
+        <div class="form-horizontal">
+            <h4>Edit Coupon</h4>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SingleCoupon.CouponId" />
+            <div class="form-group">
+                <label asp-for="SingleCoupon.Title" class="col m2 control-label"></label>
+                <div class="col m10">
+                    <input asp-for="SingleCoupon.Title" class="form-control" />
+                    <span asp-validation-for="SingleCoupon.Title" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="SingleCoupon.Content" class="col m2 control-label"></label>
+                <div class="col m10">
+                    <input asp-for="SingleCoupon.Content" class="form-control" />
+                    <span asp-validation-for="SingleCoupon.Content" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col offset-m2 col m10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+</body>
+</html>

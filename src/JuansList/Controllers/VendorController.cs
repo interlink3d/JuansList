@@ -49,6 +49,15 @@ namespace JuansList.Controllers
             return View(model);
         }
 
+        public async Task <IActionResult> UpdateProfile()
+        {
+            var User = await GetCurrentUserAsync();
 
+            var model = new EditVendorProfileViewModel();
+            model.VendorUser = User;
+
+
+            return View(model);
+        }
     }
 }
