@@ -1,11 +1,7 @@
-﻿@model JuansList.ViewModels.AllCouponsViewModel
-
-@{
-    ViewData["Title"] = "All Coupons";
-}
+﻿@model JuansList.ViewModels.EditVendorProfileViewModel
 
 <br>
-<h2>@ViewData["Title"]</h2>
+<h2>Coupons</h2>
 
 <hr />
 
@@ -17,7 +13,7 @@
 @foreach (var item in Model.Coupons)
 {
     <div class="row">
-        <div class="col m2"><a asp-action="CouponDetail" asp-route-id="@item.CouponId">@Html.DisplayFor(modelItem => item.Title)</a></div>
+        <div class="col m2"><a asp-action="CouponDetail" asp-controller="Coupons" asp-route-id="@item.CouponId">@Html.DisplayFor(modelItem => item.Title)</a></div>
         <div class="col m4">@Html.DisplayFor(modelItem => item.Content)</div>
         <div class="col m1">
             <a asp-controller="Coupons" asp-action="DeleteCoupon" asp-route-id="@item.CouponId">Delete</a>

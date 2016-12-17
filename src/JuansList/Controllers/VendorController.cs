@@ -31,7 +31,6 @@ namespace JuansList.Controllers
 
         // This task retrieves the currently authenticated user
         private Task<VendorUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-
         public async Task <IActionResult> Profile()
         {
             var User = await GetCurrentUserAsync();
@@ -49,15 +48,53 @@ namespace JuansList.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public async Task <IActionResult> UpdateProfile()
         {
             var User = await GetCurrentUserAsync();
 
             var model = new EditVendorProfileViewModel();
             model.VendorUser = User;
+            model.Coupons = await context.Coupon
+                //.Where(v => v.VendorUser == User)
+                .OrderBy(t => t.Title).ToListAsync();
+
+            model.Albums = await context.Album
+                .OrderBy(a => a.Title).ToListAsync();
 
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task <IActionResult> UpdateProfile(EditVendorProfileViewModel model, string Id)
+        {
+            var User = await GetCurrentUserAsync();
+
+            VendorUser vu = context.VendorUser.Where(i => i.Id == Id).SingleOrDefault();
+
+            vu.FirstName = model.VendorUsers.FirstName;
+            vu.LastName = model.VendorUsers.LastName;
+            vu.CompanyName = model.VendorUsers.CompanyName;
+            vu.StreetAddress = model.VendorUsers.StreetAddress;
+            vu.Zip = model.VendorUsers.Zip;
+            vu.ProfileImage = model.VendorUsers.ProfileImage;
+
+            if (ModelState.IsValid)
+            {
+                context.Add(vu);
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("UpdateProfile", "Vendor");
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

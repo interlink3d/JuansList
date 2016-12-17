@@ -42,5 +42,7 @@ namespace JuansList.Models
 
         public ICollection<VendorCategory> VendorCategories { get; set; }
 
+        public ICollection<Album> Albums { get; set; }
+
     }
 }
