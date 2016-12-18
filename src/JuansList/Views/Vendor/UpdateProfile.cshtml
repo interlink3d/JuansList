@@ -1,0 +1,89 @@
+﻿@model JuansList.ViewModels.EditVendorProfileViewModel
+@{
+    ViewData["Title"] = "Edit Your Profile";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit Profile</title>
+</head>
+<body>
+<h2>@ViewData["Title"]</h2>
+
+    <form asp-controller="Vendor" asp-action="UpdateProfile" asp-route-id="@Model.VendorUsers.Id" method="post">
+        <div class="form-horizontal">
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="VendorUsers.Id" />
+            <div class="form-group">
+                <label asp-for="VendorUsers.FirstName" class="col m2 control-label"></label>
+                <div class="col m10">
+                    <input asp-for="VendorUsers.FirstName" class="form-control" />
+                    <span asp-validation-for="VendorUsers.FirstName" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="VendorUsers.LastName" class="col m2 control-label"></label>
+                <div class="col m10">
+                    <input asp-for="VendorUsers.LastName" class="form-control" />
+                    <span asp-validation-for="VendorUsers.LastName" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="VendorUsers.CompanyName" class="col m2 control-label"></label>
+                <div class="col m10">
+                    <input asp-for="VendorUsers.CompanyName" class="form-control" />
+                    <span asp-validation-for="VendorUsers.CompanyName" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="VendorUsers.Description" class="col m2 control-label"></label>
+                <div class="col m10">
+                    <input asp-for="VendorUsers.Description" class="form-control" />
+                    <span asp-validation-for="VendorUsers.Description" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="VendorUsers.StreetAddress" class="col m2 control-label"></label>
+                <div class="col m10">
+                    <input asp-for="VendorUsers.StreetAddress" class="form-control" />
+                    <span asp-validation-for="VendorUsers.StreetAddress" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="VendorUsers.Zip" class="col m2 control-label"></label>
+                <div class="col m10">
+                    <input asp-for="VendorUsers.Zip" class="form-control" />
+                    <span asp-validation-for="VendorUsers.Zip" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="VendorUsers.ProfileImage" class="col m2 control-label"></label>
+                <div class="col m10">
+                    <input asp-for="VendorUsers.ProfileImage" class="form-control" />
+                    <span asp-validation-for="VendorUsers.ProfileImage" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col offset-m2 col m10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+    <br />
+    <div class="divider"></div>
+    
+    @await Html.PartialAsync("_GetAlbums")
+
+    <br />
+
+    @await Html.PartialAsync("_GetCoupons")
+
+
+
+</body>
+</html>

@@ -31,14 +31,113 @@ namespace JuansList.Controllers
         private Task<VendorUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+        [HttpGet]
         public IActionResult AddCoupon()
         {
-            return View();
+            Coupon model = new Coupon();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCoupon(Coupon coupon)
+        {
+            ModelState.Remove("VendorUser");
+
+            if (ModelState.IsValid)
+            {
+                var VendorUser = await GetCurrentUserAsync();
+                coupon.VendorUser = VendorUser;
+
+                context.Add(coupon);
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("Profile", "Vendor");
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("AddCoupon", "Coupons");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCoupons()
+        {
+            var model = new AllCouponsViewModel();
+            model.Coupons = await context.Coupon
+                .OrderBy(d => d.Title).ToListAsync();
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CouponDetail([FromRoute] int id)
+        {
+            var c = await context.Coupon
+                    .SingleOrDefaultAsync(cp => cp.CouponId == id);
+
+            if (c == null)
+            {
+                return NotFound();
+            }
+
+            var model = new CouponDetailViewModel()
+            {
+                SingleCoupon = c
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateCoupon(Coupon SingleCoupon, [FromRoute] int id)
+        {
+            Coupon cpn = context.Coupon.Where(i => i.CouponId == id).SingleOrDefault();
+
+            cpn.VendorUser = await GetCurrentUserAsync();
+            cpn.Title = SingleCoupon.Title;
+            cpn.Content = SingleCoupon.Content;
+
+            if (ModelState.IsValid)
+            {
+                context.Add(cpn);
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("GetCoupons", "Coupons");
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public IActionResult DeleteCoupon([FromRoute] int id)
+        {
+            var cpn =
+                from c in context.Coupon
+                where c.CouponId == id
+                select c;
+
+            context.Coupon.Remove(cpn.SingleOrDefault());
+
+            if (ModelState.IsValid)
+            {
+                context.SaveChanges();
+                return RedirectToAction("GetCoupons", "Coupons");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

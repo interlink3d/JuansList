@@ -25,23 +25,77 @@ namespace JuansList.Controllers
         public VendorController(UserManager<VendorUser> userManager, UserManager<CustomerUser> userManager2, ApplicationDbContext ctx)
         {
             _userManager = userManager;
-            _userManager2 = userManager2; 
+            _userManager2 = userManager2;
             context = ctx;
         }
 
         // This task retrieves the currently authenticated user
         private Task<VendorUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-
-        public async Task <IActionResult> Profile()
+        public async Task<IActionResult> Profile()
         {
             var User = await GetCurrentUserAsync();
+            var VendorUID = User.Id;
 
             var model = new VendorProfileViewModel();
             model.VendorUser = User;
+            model.Coupons = await context.Coupon
+                //.Where(v => v.VendorUser == User)
+                .OrderBy(t => t.Title).ToListAsync();
+
+            model.Albums = await context.Album
+                .OrderBy(a => a.Title).ToListAsync();
 
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> UpdateProfile()
+        {
+            var User = await GetCurrentUserAsync();
 
+            var model = new EditVendorProfileViewModel();
+            model.VendorUsers = User;
+            model.Coupons = await context.Coupon
+                //.Where(v => v.VendorUser == User)
+                .OrderBy(t => t.Title).ToListAsync();
+
+            model.Albums = await context.Album
+                .OrderBy(a => a.Title).ToListAsync();
+
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProfile(EditVendorProfileViewModel model, [FromRoute] string Id)
+        {
+            var User = await GetCurrentUserAsync();
+
+            VendorUser vu = context.VendorUser.Where(i => i.Id == Id).SingleOrDefault();
+
+            vu.FirstName = model.VendorUsers.FirstName;
+            vu.LastName = model.VendorUsers.LastName;
+            vu.CompanyName = model.VendorUsers.CompanyName;
+            vu.Description = model.VendorUsers.Description;
+            vu.StreetAddress = model.VendorUsers.StreetAddress;
+            vu.Zip = model.VendorUsers.Zip;
+            vu.ProfileImage = model.VendorUsers.ProfileImage;
+
+            if (ModelState.IsValid)
+            {
+                context.Add(vu);
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("Profile", "Vendor");
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
     }
 }

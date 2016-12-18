@@ -7,19 +7,20 @@
 <p class="text-success">@ViewData["StatusMessage"]</p>
 
 <div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Password:</dt>
-        <dd>
-            @if (Model.HasPassword)
+    <br />
+    <a asp-controller="Vendor" asp-action="UpdateProfile" class="waves-effect waves-light btn">Update Profile</a>
+    
+    <br />
+    <br />
+
+    @if (Model.HasPassword)
             {
-                <a asp-controller="Manage" asp-action="ChangePassword" class="btn-bracketed">Change</a>
-            }
-            else
-            {
-                <a asp-controller="Manage" asp-action="SetPassword" class="btn-bracketed">Create</a>
-            }
-        </dd>
-    </dl>
+        <a asp-controller="Manage" asp-action="ChangePassword" class="waves-effect waves-light btn">Change Password</a>
+    }
+    else
+    {
+        <a asp-controller="Manage" asp-action="SetPassword" class="waves-effect waves-light btn">Create Password</a>
+    }
+    <br />
+    <br />
 </div>

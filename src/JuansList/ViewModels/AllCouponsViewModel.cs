@@ -8,15 +8,8 @@ using JuansList.Models;
 
 namespace JuansList.ViewModels
 {
-    public class EditVendorProfileViewModel 
+    public class AllCouponsViewModel
     {
-
-        public VendorUser VendorUsers { get; set; }
-
-        public List<VendorCategory> VenCat { get; set; }
-
-        public List<Album> Albums { get; set; }
-
         public List<Coupon> Coupons { get; set; }
     }
 }
