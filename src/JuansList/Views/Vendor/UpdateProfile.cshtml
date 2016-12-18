@@ -3,7 +3,6 @@
     ViewData["Title"] = "Edit Your Profile";
 }
 
-
 <!DOCTYPE html>
 
 <html>
@@ -14,51 +13,58 @@
 <body>
 <h2>@ViewData["Title"]</h2>
 
-    <form asp-controller="Vendor" asp-action="UpdateContact" asp-route-id="@Model.VendorUser" method="post">
+    <form asp-controller="Vendor" asp-action="UpdateProfile" asp-route-id="@Model.VendorUsers.Id" method="post">
         <div class="form-horizontal">
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="VendorUser.Id" />
+            <input type="hidden" asp-for="VendorUsers.Id" />
             <div class="form-group">
-                <label asp-for="VendorUser.FirstName" class="col m2 control-label"></label>
+                <label asp-for="VendorUsers.FirstName" class="col m2 control-label"></label>
                 <div class="col m10">
-                    <input asp-for="VendorUser.FirstName" class="form-control" />
-                    <span asp-validation-for="VendorUser.FirstName" class="text-danger" />
+                    <input asp-for="VendorUsers.FirstName" class="form-control" />
+                    <span asp-validation-for="VendorUsers.FirstName" class="text-danger" />
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="VendorUser.LastName" class="col m2 control-label"></label>
+                <label asp-for="VendorUsers.LastName" class="col m2 control-label"></label>
                 <div class="col m10">
-                    <input asp-for="VendorUser.LastName" class="form-control" />
-                    <span asp-validation-for="VendorUser.LastName" class="text-danger" />
+                    <input asp-for="VendorUsers.LastName" class="form-control" />
+                    <span asp-validation-for="VendorUsers.LastName" class="text-danger" />
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="VendorUser.CompanyName" class="col m2 control-label"></label>
+                <label asp-for="VendorUsers.CompanyName" class="col m2 control-label"></label>
                 <div class="col m10">
-                    <input asp-for="VendorUser.CompanyName" class="form-control" />
-                    <span asp-validation-for="VendorUser.CompanyName" class="text-danger" />
+                    <input asp-for="VendorUsers.CompanyName" class="form-control" />
+                    <span asp-validation-for="VendorUsers.CompanyName" class="text-danger" />
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="VendorUser.StreetAddress" class="col m2 control-label"></label>
+                <label asp-for="VendorUsers.Description" class="col m2 control-label"></label>
                 <div class="col m10">
-                    <input asp-for="VendorUser.StreetAddress" class="form-control" />
-                    <span asp-validation-for="VendorUser.StreetAddress" class="text-danger" />
+                    <input asp-for="VendorUsers.Description" class="form-control" />
+                    <span asp-validation-for="VendorUsers.Description" class="text-danger" />
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="VendorUser.Zip" class="col m2 control-label"></label>
+                <label asp-for="VendorUsers.StreetAddress" class="col m2 control-label"></label>
                 <div class="col m10">
-                    <input asp-for="VendorUser.Zip" class="form-control" />
-                    <span asp-validation-for="VendorUser.Zip" class="text-danger" />
+                    <input asp-for="VendorUsers.StreetAddress" class="form-control" />
+                    <span asp-validation-for="VendorUsers.StreetAddress" class="text-danger" />
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="VendorUser.ProfileImage" class="col m2 control-label"></label>
+                <label asp-for="VendorUsers.Zip" class="col m2 control-label"></label>
                 <div class="col m10">
-                    <input asp-for="VendorUser.ProfileImage" class="form-control" />
-                    <span asp-validation-for="VendorUser.ProfileImage" class="text-danger" />
+                    <input asp-for="VendorUsers.Zip" class="form-control" />
+                    <span asp-validation-for="VendorUsers.Zip" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="VendorUsers.ProfileImage" class="col m2 control-label"></label>
+                <div class="col m10">
+                    <input asp-for="VendorUsers.ProfileImage" class="form-control" />
+                    <span asp-validation-for="VendorUsers.ProfileImage" class="text-danger" />
                 </div>
             </div>
             <div class="form-group">
@@ -69,9 +75,10 @@
         </div>
     </form>
     <br />
-    <div class="col offset-m2 col m6">
-        <a asp-controller="Albums" asp-action="AddAlbum" class="waves-effect waves-light btn">Add New Album</a>
-    </div>
+    <div class="divider"></div>
+    
+    @await Html.PartialAsync("_GetAlbums")
+
     <br />
 
     @await Html.PartialAsync("_GetCoupons")

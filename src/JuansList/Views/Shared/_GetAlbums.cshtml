@@ -1,14 +1,7 @@
 ﻿@model JuansList.ViewModels.EditVendorProfileViewModel
 
 <br>
-<h2>Coupons</h2>
-
-<hr />
-
-<div class="row">
-    <div class="col m2">Title</div>
-    <div class="col m4">Description</div>
-</div>
+<h2>Albums</h2>
 
 @foreach (var item in Model.Albums)
 {
@@ -16,12 +9,12 @@
         <div class="col m2"><a asp-action="AlbumDetail" asp-controller="Albums" asp-route-id="@item.AlbumId">@Html.DisplayFor(modelItem => item.Title)</a></div>
         <div class="col m4">@Html.DisplayFor(modelItem => item.Images)</div>
         <div class="col m1">
-            <a asp-controller="Coupons" asp-action="DeleteCoupon" asp-route-id="@item.AlbumId">Delete</a>
+            <a asp-controller="Albums" asp-action="DeleteAlbum" asp-route-id="@item.AlbumId">Delete</a>
         </div>
     </div>
 }
  
 <br />   
 <div class="col m4 ">
-    <a asp-controller="Coupons" asp-action="AddCoupon" class="waves-effect waves-light btn">Add Coupon</a>
+    <a asp-controller="Albums" asp-action="AddAlbum" class="waves-effect waves-light btn">Add Album</a>
 </div>
