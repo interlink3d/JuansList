@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using JuansList.Data;
 using JuansList.Models;
 using JuansList.ViewModels;
+using Microsoft.AspNetCore.Routing;
 
 namespace JuansList.Controllers
 {
@@ -99,7 +100,10 @@ namespace JuansList.Controllers
             try
             {
                 context.SaveChanges();
-                return RedirectToAction("AlbumDetail", "Albums", id);
+                //return RedirectToAction("AlbumDetail", "Albums", id);
+
+                return RedirectToAction("AlbumDetail", new RouteValueDictionary(
+                    new { controller = "Albums", action = "AlbumDetail", Id = id }));
             }
 
             catch (DbUpdateException)
