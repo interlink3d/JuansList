@@ -31,11 +31,39 @@ namespace JuansList.Controllers
         private Task<VendorUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult AddAlbum()
         {
-            return View();
+            var model = new AddAlbumViewModel();
+
+            return View(model);
         }
+
+        [HttpPost]
+        public async Task <IActionResult> AddAlbum(AddAlbumViewModel album)
+        {
+            ModelState.Remove("VendorUser");
+
+            if (ModelState.IsValid)
+            {
+                var VendorUser = await GetCurrentUserAsync();
+                album.VendorUser = VendorUser;
+                album.AlbumImages.AlbumId = album.Album.AlbumId;
+                context.Add(album);
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("UpdateProfile", "Vendor");
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("Profile", "Vendor");
+            }
+        }
+
 
         [HttpPost]
         public IActionResult AddImage()
