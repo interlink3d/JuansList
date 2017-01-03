@@ -75,10 +75,37 @@ namespace JuansList.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult AddImage()
+        [HttpGet]
+        public IActionResult AddImage([FromRoute] int id)
         {
-            return View();
+            AlbumImages model = new AlbumImages();
+            model.AlbumId = id;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddImage(AlbumImages image, [FromRoute] int id)
+        {
+            var albId = context.Album
+                .Where(i => i.AlbumId == id).SingleOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                image.AlbumId = albId.AlbumId;
+                context.Add(image);
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("AlbumDetail", "Albums", id);
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpGet]
@@ -118,7 +145,7 @@ namespace JuansList.Controllers
         public async Task<IActionResult> UpdateAlbum(AlbumDetailViewModel model, [FromRoute] int id)
         {
             Album alb = context.Album.Where(i => i.AlbumId == id).SingleOrDefault();
-            AlbumImages ai = context.AlbumImages.Where(aid => aid.AlbumId == id).SingleOrDefault();
+            AlbumImages ai = context.AlbumImages.Where(aid => aid.AlbumImagesId == id).SingleOrDefault();
 
             alb.VendorUser = await GetCurrentUserAsync();
             alb.Title = model.SingleAlbum.Title;
@@ -175,7 +202,7 @@ namespace JuansList.Controllers
             if (ModelState.IsValid)
             {
                 context.SaveChanges();
-                return RedirectToAction("AlbumDetail", "Album");
+                return RedirectToAction("UpdateProfile", "Vendor");
             }
 
             else

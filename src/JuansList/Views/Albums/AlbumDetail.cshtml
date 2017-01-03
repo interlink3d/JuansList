@@ -44,7 +44,7 @@
            }
 
             <div class="col m4 ">
-                <a asp-controller="Albums" asp-action="AddImage" class="waves-effect waves-light btn">Add New Image</a>
+                <a asp-controller="Albums" asp-action="AddImage" asp-route-id="@Model.SingleAlbum.AlbumId" class="waves-effect waves-light btn">Add New Image</a>
             </div>
             <br/>
 

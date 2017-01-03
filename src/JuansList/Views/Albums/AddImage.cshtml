@@ -1,0 +1,38 @@
+﻿@model JuansList.Models.AlbumImages
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Image</title>
+</head>
+<body>
+
+    <form asp-controller="Albums" asp-action="AddImage" asp-route-id="@Model.AlbumId" method="post">
+        <div class="form-horizontal">
+            <h4>Add New Image</h4>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AlbumId" />
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="ImageUrl" class="form-control" />
+                    <span asp-validation-for="ImageUrl" class="text-danger" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save Image" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+    <br />
+    <div>
+        <a asp-controller="Albums" asp-action="AlbumDetail" asp-route-id="AlbumId">Back to Album Details</a>
+    </div>
+
+</body>
+</html>
