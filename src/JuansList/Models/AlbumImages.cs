@@ -15,7 +15,7 @@ namespace JuansList.Models
         [Required]
         public string ImageUrl { get; set; }
 
-        public int AlbumId { get; set; } 
+        public int? AlbumId { get; set; } 
 
     }
 }

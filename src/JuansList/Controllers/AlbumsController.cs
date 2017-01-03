@@ -42,21 +42,29 @@ namespace JuansList.Controllers
         [HttpPost]
         public async Task <IActionResult> AddAlbum(AddAlbumViewModel model)
         {
-            ModelState.Remove("VendorUser");
+            ModelState.Remove("Album.VendorUser");
+            ModelState.Remove("AlbumImages.AlbumId");
 
             if (ModelState.IsValid)
             {
                 var VendorUser = await GetCurrentUserAsync();
-                model.Album.VendorUser = VendorUser;
-                model.Images.ImageUrl = model.Images.ImageUrl;
-            
-                context.Add(model);
-           
+
+                Album newAlbum = new Album();
+                newAlbum.VendorUser = VendorUser;
+                newAlbum.Title = model.Album.Title;
+                context.Add(newAlbum);
+                await context.SaveChangesAsync();
+
+                AlbumImages alimg = new AlbumImages();
+                alimg.ImageUrl = model.Images.ImageUrl;
+                alimg.AlbumId = newAlbum.AlbumId;          
+                context.Add(alimg);
+                await context.SaveChangesAsync();
+
             }
 
             try
             {
-                context.SaveChanges();
                 return RedirectToAction("UpdateProfile", "Vendor");
             }
 
@@ -89,7 +97,8 @@ namespace JuansList.Controllers
             var a = await context.Album
                     .SingleOrDefaultAsync(i => i.AlbumId == id);
 
-            var b = await context.AlbumImages.ToListAsync();
+            var b = await context.AlbumImages
+                    .Where(aid => aid.AlbumId == id).ToListAsync();
 
             if (a == null)
             {

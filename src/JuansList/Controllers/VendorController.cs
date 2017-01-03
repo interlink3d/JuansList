@@ -60,6 +60,7 @@ namespace JuansList.Controllers
                 .OrderBy(t => t.Title).ToListAsync();
 
             model.Albums = await context.Album
+                //.Where(v => v.VendorUser == User)
                 .OrderBy(a => a.Title).ToListAsync();
 
 

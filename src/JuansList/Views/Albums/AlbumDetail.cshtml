@@ -12,26 +12,41 @@
     <form asp-controller="Album" asp-action="UpdateAlbum" asp-route-id="@Model.SingleAlbum.AlbumId" method="post">
         <div class="form-horizontal">
             <h4>Edit Album</h4>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="SingleAlbum.AlbumId" />
-            <div class="form-group">
-                <label asp-for="SingleAlbum.Title" class="col m2 control-label"></label>
-                <div class="col m10">
-                    <input asp-for="SingleAlbum.Title" class="form-control" />
-                    <span asp-validation-for="SingleAlbum.Title" class="text-danger" />
+            <div class="row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="SingleAlbum.AlbumId" />
+                <div class="form-group">
+                    <label asp-for="SingleAlbum.Title" class="col m1 control-label"></label>
+                    <div class="col m8">
+                        <input asp-for="SingleAlbum.Title" class="form-control" />
+                        <span asp-validation-for="SingleAlbum.Title" class="text-danger" />
+                    </div>
                 </div>
             </div>
 
            @foreach (var item in Model.Images)
            {
-            <div class="row">
-                <div class="col m4">@Html.DisplayFor(modelItem => item.ImageUrl)</div>
-                <div class="col m1">
-                    <a asp-controller="Albums" asp-action="DeleteImage" asp-route-id="@item.AlbumImagesId">Delete</a>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col m4">
+                        <label class="col m6 control-label">Image URL</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col m6">
+                        <input asp-for="@item.ImageUrl"/>
+                    </div>
+                    <div class="col m1">
+                        <a asp-controller="Albums" asp-action="DeleteImage" asp-route-id="@item.AlbumImagesId">Delete Image</a>
+                    </div>
                 </div>
             </div>
            }
+
+            <div class="col m4 ">
+                <a asp-controller="Albums" asp-action="AddImage" class="waves-effect waves-light btn">Add New Image</a>
+            </div>
+            <br/>
 
             <div class="form-group">
                 <div class="col offset-m2 col m10">
@@ -42,7 +57,7 @@
     </form>
     <br />
     <div>
-        <a asp-action="GetAlbums">Back to List</a>
+        <a asp-action="GetAlbums" asp-controller="Albums">Back to List</a>
     </div>
 
 </body>

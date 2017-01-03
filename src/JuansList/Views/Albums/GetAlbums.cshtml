@@ -22,9 +22,11 @@
             <a asp-controller="Albums" asp-action="DeleteAlbum" asp-route-id="@item.AlbumId">Delete</a>
         </div>
     </div>
+    <br/>
+    <div class="col m4 ">
+        <a asp-controller="Albums" asp-action="AddImage" asp-route-id="@item.AlbumId" class="waves-effect waves-light btn">Add Image</a>
+    </div>
+
 }
 
 <br />
-<div class="col m4 ">
-    <a asp-controller="Albums" asp-action="AddImage" class="waves-effect waves-light btn">Add Image</a>
-</div>
