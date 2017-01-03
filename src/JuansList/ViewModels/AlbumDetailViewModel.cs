@@ -9,5 +9,10 @@ namespace JuansList.ViewModels
     public class AlbumDetailViewModel
     {
         public Album SingleAlbum { get; set; }
+
+        public AlbumImages SingleImage { get; set; }
+
+        public List<AlbumImages> Images { get; set; }
+
     }
 }

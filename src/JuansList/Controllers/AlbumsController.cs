@@ -34,23 +34,24 @@ namespace JuansList.Controllers
         [HttpGet]
         public IActionResult AddAlbum()
         {
-            var model = new Album();
+            var model = new AddAlbumViewModel();
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task <IActionResult> AddAlbum(Album album)
+        public async Task <IActionResult> AddAlbum(AddAlbumViewModel model)
         {
             ModelState.Remove("VendorUser");
 
             if (ModelState.IsValid)
             {
                 var VendorUser = await GetCurrentUserAsync();
-                album.VendorUser = VendorUser;
-                album.Images = album.Images;
+                model.Album.VendorUser = VendorUser;
+                model.Images.ImageUrl = model.Images.ImageUrl;
             
-                context.Add(album);
+                context.Add(model);
+           
             }
 
             try
@@ -88,6 +89,8 @@ namespace JuansList.Controllers
             var a = await context.Album
                     .SingleOrDefaultAsync(i => i.AlbumId == id);
 
+            var b = await context.AlbumImages.ToListAsync();
+
             if (a == null)
             {
                 return NotFound();
@@ -95,10 +98,82 @@ namespace JuansList.Controllers
 
             var model = new AlbumDetailViewModel()
             {
-                SingleAlbum = a
+                SingleAlbum = a,
+                Images = b
             };
 
             return View(model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAlbum(AlbumDetailViewModel model, [FromRoute] int id)
+        {
+            Album alb = context.Album.Where(i => i.AlbumId == id).SingleOrDefault();
+            AlbumImages ai = context.AlbumImages.Where(aid => aid.AlbumId == id).SingleOrDefault();
+
+            alb.VendorUser = await GetCurrentUserAsync();
+            alb.Title = model.SingleAlbum.Title;
+            ai.ImageUrl = model.SingleImage.ImageUrl;
+
+            if (ModelState.IsValid)
+            {
+                context.Add(alb);
+                context.Add(ai);
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("UpdateProfile", "Vendor");
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public IActionResult DeleteAlbum([FromRoute] int id)
+        {
+            var alb =
+                from a in context.Album
+                where a.AlbumId == id
+                select a;
+
+            context.Album.Remove(alb.SingleOrDefault());
+
+            if (ModelState.IsValid)
+            {
+                context.SaveChanges();
+                return RedirectToAction("UpdateProfile", "Vendor");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public IActionResult DeleteImage([FromRoute] int id)
+        {
+            var ai =
+                from a in context.AlbumImages
+                where a.AlbumImagesId == id
+                select a;
+
+            context.AlbumImages.Remove(ai.SingleOrDefault());
+
+            if (ModelState.IsValid)
+            {
+                context.SaveChanges();
+                return RedirectToAction("AlbumDetail", "Album");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
     }
 }

@@ -7,7 +7,6 @@
 {
     <div class="row">
         <div class="col m2"><a asp-action="AlbumDetail" asp-controller="Albums" asp-route-id="@item.AlbumId">@Html.DisplayFor(modelItem => item.Title)</a></div>
-        <div class="col m4">@Html.DisplayFor(modelItem => item.Images)</div>
         <div class="col m1">
             <a asp-controller="Albums" asp-action="DeleteAlbum" asp-route-id="@item.AlbumId">Delete</a>
         </div>
