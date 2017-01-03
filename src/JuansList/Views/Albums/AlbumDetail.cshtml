@@ -1,0 +1,49 @@
+﻿@model JuansList.ViewModels.AlbumDetailViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit Album</title>
+</head>
+<body>
+
+    <form asp-controller="Album" asp-action="UpdateAlbum" asp-route-id="@Model.SingleAlbum.AlbumId" method="post">
+        <div class="form-horizontal">
+            <h4>Edit Album</h4>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SingleAlbum.AlbumId" />
+            <div class="form-group">
+                <label asp-for="SingleAlbum.Title" class="col m2 control-label"></label>
+                <div class="col m10">
+                    <input asp-for="SingleAlbum.Title" class="form-control" />
+                    <span asp-validation-for="SingleAlbum.Title" class="text-danger" />
+                </div>
+            </div>
+
+           @foreach (var item in Model.SingleAlbum.Images)
+           {
+            <div class="row">
+                <div class="col m4">@Html.DisplayFor(modelItem => item.ImageUrl)</div>
+                <div class="col m1">
+                    <a asp-controller="Albums" asp-action="DeleteImage" asp-route-id="@item.AlbumImagesId">Delete</a>
+                </div>
+            </div>
+           }
+
+            <div class="form-group">
+                <div class="col offset-m2 col m10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+    <br />
+    <div>
+        <a asp-action="GetAlbums">Back to List</a>
+    </div>
+
+</body>
+</html>

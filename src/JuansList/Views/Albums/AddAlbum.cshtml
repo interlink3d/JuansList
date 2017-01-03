@@ -1,4 +1,4 @@
-@model JuansList.ViewModels.AddAlbumViewModel
+@model JuansList.Models.Album
 
 <!DOCTYPE html>
 
@@ -14,39 +14,39 @@
         <h4>Add New Album</h4>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="Album.Title" class="col-md-2 control-label"></label>
+            <label asp-for="Title" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Album.Title" class="form-control" />
-                <span asp-validation-for="Album.Title" class="text-danger" />
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger" />
             </div>
         </div>
 
         <div class="form-group">
-            <label asp-for="AlbumImages.ImageUrl" class="col-md-2 control-label"></label>
+            <label asp-for="Images" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="AlbumImages.ImageUrl" class="form-control" />
-                <span asp-validation-for="AlbumImages.ImageUrl" class="text-danger" />
+                <input asp-for="Images" class="form-control" />
+                <span asp-validation-for="Images" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="AlbumImages.ImageUrl" class="col-md-2 control-label"></label>
+            <label asp-for="Images" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="AlbumImages.ImageUrl" class="form-control" />
-                <span asp-validation-for="AlbumImages.ImageUrl" class="text-danger" />
+                <input asp-for="Images" class="form-control" />
+                <span asp-validation-for="Images" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="AlbumImages.ImageUrl" class="col-md-2 control-label"></label>
+            <label asp-for="Images" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="AlbumImages.ImageUrl" class="form-control" />
-                <span asp-validation-for="AlbumImages.ImageUrl" class="text-danger" />
+                <input asp-for="Images" class="form-control" />
+                <span asp-validation-for="Images" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="AlbumImages.ImageUrl" class="col-md-2 control-label"></label>
+            <label asp-for="Images" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="AlbumImages.ImageUrl" class="form-control" />
-                <span asp-validation-for="AlbumImages.ImageUrl" class="text-danger" />
+                <input asp-for="Images" class="form-control" />
+                <span asp-validation-for="Images" class="text-danger" />
             </div>
         </div>
         
@@ -58,7 +58,7 @@
         </div>
     </div>
 </form>
-
+<br/>
 <div>
     <a asp-controller="Vendor" asp-action="UpdateProfile">Back to Update Profile</a>
 </div>

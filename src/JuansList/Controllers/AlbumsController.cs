@@ -34,13 +34,13 @@ namespace JuansList.Controllers
         [HttpGet]
         public IActionResult AddAlbum()
         {
-            var model = new AddAlbumViewModel();
+            var model = new Album();
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task <IActionResult> AddAlbum(AddAlbumViewModel album)
+        public async Task <IActionResult> AddAlbum(Album album)
         {
             ModelState.Remove("VendorUser");
 
@@ -48,7 +48,8 @@ namespace JuansList.Controllers
             {
                 var VendorUser = await GetCurrentUserAsync();
                 album.VendorUser = VendorUser;
-                album.AlbumImages.AlbumId = album.Album.AlbumId;
+                album.Images = album.Images;
+            
                 context.Add(album);
             }
 
@@ -72,15 +73,32 @@ namespace JuansList.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAlbums()
+        public async Task <IActionResult> GetAlbums()
         {
+            var model = new AllAlbumsViewModel();
+            model.Albums = await context.Album
+                .OrderBy(a => a.Title).ToListAsync();
+
             return View();
         }
 
         [HttpGet]
-        public IActionResult GetImages()
+        public async Task <IActionResult> AlbumDetail([FromRoute] int id)
         {
-            return View();
+            var a = await context.Album
+                    .SingleOrDefaultAsync(i => i.AlbumId == id);
+
+            if (a == null)
+            {
+                return NotFound();
+            }
+
+            var model = new AlbumDetailViewModel()
+            {
+                SingleAlbum = a
+            };
+
+            return View(model);
         }
     }
 }
