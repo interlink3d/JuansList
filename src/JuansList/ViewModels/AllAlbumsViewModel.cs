@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using JuansList.Models;
 
 namespace JuansList.ViewModels
 {
-    public class AddAlbumViewModel
+    public class AllAlbumsViewModel
     {
-        public Album Album { get; set; }
-
-        public AlbumImages Images { get; set; }
-        
+        public List<Album> Albums { get; set; }
     }
 }

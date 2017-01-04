@@ -1,36 +1,44 @@
-@model JuansList.Models.Album
+@model JuansList.ViewModels.AddAlbumViewModel
 
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>AddAlbum</title>
+    <title>Add Album</title>
 </head>
 <body>
 
 <form asp-action="AddAlbum">
     <div class="form-horizontal">
-        <h4>Album</h4>
-        <hr />
+        <h4>Add New Album</h4>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="Title" class="col-md-2 control-label"></label>
+            <label asp-for="Album.Title" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger" />
+                <input asp-for="Album.Title" class="form-control" />
+                <span asp-validation-for="Album.Title" class="text-danger" />
             </div>
         </div>
+
+        <div class="form-group">
+            <label asp-for="Images.ImageUrl" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Images.ImageUrl" class="form-control" />
+                <span asp-validation-for="Images.ImageUrl" class="text-danger" />
+            </div>
+        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Add Album" class="btn btn-default" />
             </div>
         </div>
     </div>
 </form>
-
+<br/>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Vendor" asp-action="UpdateProfile">Back to Update Profile</a>
 </div>
 
 </body>

@@ -1,0 +1,32 @@
+﻿@model JuansList.ViewModels.AllAlbumsViewModel
+
+@{
+    ViewData["Title"] = "All Albums";
+}
+
+<br>
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+
+<div class="row">
+    <div class="col m2">Title</div>
+    <div class="col m4">images?</div>
+</div>
+
+@foreach (var item in Model.Albums)
+{
+    <div class="row">
+        <div class="col m2"><a asp-action="AlbumDetail" asp-route-id="@item.AlbumId">@Html.DisplayFor(modelItem => item.Title)</a></div>
+        <div class="col m1">
+            <a asp-controller="Albums" asp-action="DeleteAlbum" asp-route-id="@item.AlbumId">Delete</a>
+        </div>
+    </div>
+    <br/>
+    <div class="col m4 ">
+        <a asp-controller="Albums" asp-action="AddImage" asp-route-id="@item.AlbumId" class="waves-effect waves-light btn">Add Image</a>
+    </div>
+
+}
+
+<br />

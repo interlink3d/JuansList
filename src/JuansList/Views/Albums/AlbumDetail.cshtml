@@ -1,0 +1,64 @@
+﻿@model JuansList.ViewModels.AlbumDetailViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit Album</title>
+</head>
+<body>
+
+    <form asp-controller="Album" asp-action="UpdateAlbum" asp-route-id="@Model.SingleAlbum.AlbumId" method="post">
+        <div class="form-horizontal">
+            <h4>Edit Album</h4>
+            <div class="row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="SingleAlbum.AlbumId" />
+                <div class="form-group">
+                    <label asp-for="SingleAlbum.Title" class="col m1 control-label"></label>
+                    <div class="col m8">
+                        <input asp-for="SingleAlbum.Title" class="form-control" />
+                        <span asp-validation-for="SingleAlbum.Title" class="text-danger" />
+                    </div>
+                </div>
+            </div>
+
+           @foreach (var item in Model.Images)
+           {
+            <div class="form-group">
+                <div class="row">
+                    <div class="col m4">
+                        <label class="col m6 control-label">Image URL</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col m6">
+                        <input asp-for="@item.ImageUrl"/>
+                    </div>
+                    <div class="col m1">
+                        <a asp-controller="Albums" asp-action="DeleteImage" asp-route-id="@item.AlbumImagesId">Delete Image</a>
+                    </div>
+                </div>
+            </div>
+           }
+
+            <div class="col m4 ">
+                <a asp-controller="Albums" asp-action="AddImage" asp-route-id="@Model.SingleAlbum.AlbumId" class="waves-effect waves-light btn">Add New Image</a>
+            </div>
+            <br/>
+
+            <div class="form-group">
+                <div class="col offset-m2 col m10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+    <br />
+    <div>
+        <a asp-action="UpdateProfile" asp-controller="Vendor">Back to Edit Profile</a>
+    </div>
+
+</body>
+</html>
