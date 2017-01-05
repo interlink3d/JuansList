@@ -150,18 +150,20 @@ namespace JuansList.Controllers
             ModelState.Remove("SingleAlbum.Images");
 
             Album alb = context.Album.Where(i => i.AlbumId == id).SingleOrDefault();
-            //List <AlbumImages> ai = context.AlbumImages.Where(aid => aid.AlbumId == id).ToList();
+            //AlbumImages ai = context.AlbumImages.Where(aid => aid.AlbumId == id).ToAsyncEnumerable();
+            List<AlbumImages> ai = model.Images.ToList();
+                //context.AlbumImages.Where(aid => aid.AlbumId == id).ToList();
 
-            //ai.Contains() = model.SingleImage.ImageUrl;
 
             if (ModelState.IsValid)
             {
                 var VendorUser = await GetCurrentUserAsync();
                 alb.VendorUser = VendorUser;
                 alb.Title = model.SingleAlbum.Title;
+                alb.Images = model.Images.ToArray();
 
                 context.Add(alb);
-                //context.Add(ai);
+                context.Add(ai);
             }
 
             try
