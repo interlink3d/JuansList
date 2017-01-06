@@ -1,0 +1,31 @@
+﻿@model JuansList.ViewModels.AlbumDetailViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View Album</title>
+</head>
+<body>
+
+        <div class="row">
+            <div>
+                <h3>@Html.DisplayFor(model => model.SingleAlbum.Title)</h3>
+            </div>          
+        </div>
+
+            @foreach (var item in Model.Images)
+            {
+                <div class="col s6 m3">
+                    <img src="@Url.Content(item.ImageUrl)" alt="Image" style="padding-top: 1em; max-width: 200px;" />
+                </div>
+            }
+
+    <br />
+    <div>
+        <a asp-action="Profile" asp-controller="Vendor">Back to Vendor Profile</a>
+    </div>
+
+</body>
+</html>

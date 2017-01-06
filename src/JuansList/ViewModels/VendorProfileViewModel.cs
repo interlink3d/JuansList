@@ -18,6 +18,8 @@ namespace JuansList.ViewModels
 
         public List<Album> Albums { get; set; }
 
+        public List<AlbumImages> Images { get; set; }
+
         public List<Coupon> Coupons { get; set; }
 
         public List<Review> Reviews { get; set; }

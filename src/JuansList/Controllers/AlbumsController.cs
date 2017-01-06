@@ -100,10 +100,8 @@ namespace JuansList.Controllers
             try
             {
                 context.SaveChanges();
-                //return RedirectToAction("AlbumDetail", "Albums", id);
-
                 return RedirectToAction("AlbumDetail", new RouteValueDictionary(
-                    new { controller = "Albums", action = "AlbumDetail", Id = id }));
+                new { controller = "Albums", action = "AlbumDetail", Id = id }));
             }
 
             catch (DbUpdateException)
@@ -148,15 +146,22 @@ namespace JuansList.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateAlbum(AlbumDetailViewModel model, [FromRoute] int id)
         {
-            Album alb = context.Album.Where(i => i.AlbumId == id).SingleOrDefault();
-            AlbumImages ai = context.AlbumImages.Where(aid => aid.AlbumImagesId == id).SingleOrDefault();
+            ModelState.Remove("SingleAlbum.VendorUser");
+            ModelState.Remove("SingleAlbum.Images");
 
-            alb.VendorUser = await GetCurrentUserAsync();
-            alb.Title = model.SingleAlbum.Title;
-            ai.ImageUrl = model.SingleImage.ImageUrl;
+            Album alb = context.Album.Where(i => i.AlbumId == id).SingleOrDefault();
+            //AlbumImages ai = context.AlbumImages.Where(aid => aid.AlbumId == id).ToAsyncEnumerable();
+            List<AlbumImages> ai = model.Images.ToList();
+                //context.AlbumImages.Where(aid => aid.AlbumId == id).ToList();
+
 
             if (ModelState.IsValid)
             {
+                var VendorUser = await GetCurrentUserAsync();
+                alb.VendorUser = VendorUser;
+                alb.Title = model.SingleAlbum.Title;
+                alb.Images = model.Images.ToArray();
+
                 context.Add(alb);
                 context.Add(ai);
             }
@@ -172,6 +177,25 @@ namespace JuansList.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> AlbumView ([FromRoute] int id)
+        {
+            var User = await GetCurrentUserAsync();
+
+            var model = new AlbumDetailViewModel();
+
+            model.SingleAlbum = context.Album
+                .Where(i => i.AlbumId == id).SingleOrDefault();
+
+            model.Images = await context.AlbumImages
+                .Where(aid => aid.AlbumId == id).ToListAsync();
+
+            return View(model);
+
+        }
+
 
         public IActionResult DeleteAlbum([FromRoute] int id)
         {
