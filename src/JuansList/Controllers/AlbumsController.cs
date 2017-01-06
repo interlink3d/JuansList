@@ -182,11 +182,12 @@ namespace JuansList.Controllers
         [HttpGet]
         public async Task<IActionResult> AlbumView ([FromRoute] int id)
         {
+            var User = await GetCurrentUserAsync();
 
             var model = new AlbumDetailViewModel();
 
-            model.SingleAlbum = await context.Album
-                    .SingleOrDefaultAsync(i => i.AlbumId == id);
+            model.SingleAlbum = context.Album
+                .Where(i => i.AlbumId == id).SingleOrDefault();
 
             model.Images = await context.AlbumImages
                 .Where(aid => aid.AlbumId == id).ToListAsync();

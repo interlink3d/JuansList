@@ -58,11 +58,11 @@ namespace JuansList.Controllers
             var model = new EditVendorProfileViewModel();
             model.VendorUsers = User;
             model.Coupons = await context.Coupon
-                //.Where(v => v.VendorUser == User)
+                .Where(v => v.VendorUser == User)
                 .OrderBy(t => t.Title).ToListAsync();
 
             model.Albums = await context.Album
-                //.Where(v => v.VendorUser == User)
+                .Where(v => v.VendorUser == User)
                 .OrderBy(a => a.Title).ToListAsync();
 
 
