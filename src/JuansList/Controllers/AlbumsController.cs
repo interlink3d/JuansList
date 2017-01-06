@@ -178,6 +178,24 @@ namespace JuansList.Controllers
             }
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> AlbumView ([FromRoute] int id)
+        {
+
+            var model = new AlbumDetailViewModel();
+
+            model.SingleAlbum = await context.Album
+                    .SingleOrDefaultAsync(i => i.AlbumId == id);
+
+            model.Images = await context.AlbumImages
+                .Where(aid => aid.AlbumId == id).ToListAsync();
+
+            return View(model);
+
+        }
+
+
         public IActionResult DeleteAlbum([FromRoute] int id)
         {
             var alb =
