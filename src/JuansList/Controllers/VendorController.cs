@@ -109,25 +109,39 @@ namespace JuansList.Controllers
         }
 
         [HttpPost]
-
-        public async Task<IActionResult> AddCategories(EditVendorProfileViewModel model, [FromBody] int id)
+        public async Task<IActionResult> AddCat(EditVendorProfileViewModel model)
         {
-            var User = await GetCurrentUserAsync();
+          
 
-            List <Category> c = context.Category.ToList();
-            foreach (Category cat in c)
-            {
-                
-            }
+                var User = await GetCurrentUserAsync();
 
-            if (ModelState.IsValid)
-            {
-                context.Add(c);
+                List <Category> c = model.Categories.ToList();
+                foreach (Category cat in c)
+                {
+                    // Try to find an Attendee record that matches the EmployeeId and current ProgramId (from loop)
+                    VendorCategory vct = await context.VendorCategory.Where(a => a.VendorUser.Id == User.Id).SingleOrDefaultAsync();
+                    if (vct == null && model.VenCat != null && model.VenCat.Contains(vct))
+                    {
+                        // If a program was selected but no attendee record exists, add one
+                        context.VendorCategory.Add(new VendorCategory { Category = model.Categories.SingleOrDefault(), VendorUser = User });
+                    }
+                    else if (vct != null && model.VenCat != null && !model.VenCat.Contains(vct))
+                    {
+                        // If a program was not selected, but an attendee record exists, remove it
+                        context.VendorCategory.Remove(vct);
+                    }
+                    else if (vct != null && model.VenCat == null)
+                    {
+                        // If a program was not selected, but an attendee record exists, remove it
+                        context.VendorCategory.Remove(vct);
+                    }
+
+
+                await context.SaveChangesAsync();
             }
 
             try
             {
-                context.SaveChanges();
                 return RedirectToAction("Profile", "Vendor");
             }
 
@@ -135,6 +149,8 @@ namespace JuansList.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+
+           
         }
     }
 }
