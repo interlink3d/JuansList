@@ -69,8 +69,11 @@ namespace JuansList.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMessages()
         {
+            var User = await GetCurrentUserAsync();
+
             var model = new AllMessagesViewModel();
             model.Messages = await context.Message
+                .Where(v => v.VendorUser == User)
                 .OrderBy(d => d.DateStamp).ToListAsync();
 
             return View(model);

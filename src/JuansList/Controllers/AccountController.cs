@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using JuansList.Models;
 using JuansList.Models.AccountViewModels;
 using JuansList.Services;
+using JuansList.Data;
 
 namespace JuansList.Controllers
 {
@@ -114,6 +116,7 @@ namespace JuansList.Controllers
         public async Task<IActionResult> VendorRegister(VendorRegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
             if (ModelState.IsValid)
             {
                 var VendorUser = new VendorUser

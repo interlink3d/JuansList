@@ -70,8 +70,11 @@ namespace JuansList.Controllers
         [HttpGet]
         public async Task <IActionResult> GetEstimates()
         {
+            var User = await GetCurrentUserAsync();
+
             var model = new AllEstimatesViewModel();
             model.Estimates = await context.Estimate
+                .Where(v => v.VendorUser == User)
                 .OrderBy(d => d.DateStart).ToListAsync();
 
             return View(model);

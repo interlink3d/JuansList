@@ -65,6 +65,13 @@ namespace JuansList.Controllers
                 .Where(v => v.VendorUser == User)
                 .OrderBy(a => a.Title).ToListAsync();
 
+            model.Categories = await context.Category
+                .OrderBy(cc => cc.Name).ToListAsync();
+
+            model.VenCat = await context.VendorCategory
+                .Where(v => v.VendorUser == User)
+                .OrderBy(c => c.Category.Name).ToListAsync();
+
 
             return View(model);
         }
@@ -87,6 +94,35 @@ namespace JuansList.Controllers
             if (ModelState.IsValid)
             {
                 context.Add(vu);
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("Profile", "Vendor");
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> AddCategories(EditVendorProfileViewModel model, [FromBody] int id)
+        {
+            var User = await GetCurrentUserAsync();
+
+            List <Category> c = context.Category.ToList();
+            foreach (Category cat in c)
+            {
+                
+            }
+
+            if (ModelState.IsValid)
+            {
+                context.Add(c);
             }
 
             try

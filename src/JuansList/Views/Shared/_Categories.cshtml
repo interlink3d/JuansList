@@ -1,0 +1,19 @@
+﻿@model JuansList.ViewModels.EditVendorProfileViewModel
+
+<h2>Categories</h2>
+
+<div class="input-field col l6 m6 s12">
+    <select multiple>
+        <option value="" disabled selected>Choose your categories</option>
+        @foreach (var c in Model.Categories)
+        {
+                <option value="@c.CategoryId">@Html.DisplayFor(modelItem => c.Name)</option>
+        
+        }
+    </select>
+</div>
+
+<br />
+<div class="col m4 ">
+    <a asp-controller="Vendor" asp-action="AddCategories" class="waves-effect waves-light btn">Save</a>
+</div>
