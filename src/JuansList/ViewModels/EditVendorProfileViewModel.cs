@@ -15,6 +15,8 @@ namespace JuansList.ViewModels
 
         public List<VendorCategory> VenCat { get; set; }
 
+        public List<Category> Categories { get; set; }
+
         public List<Album> Albums { get; set; }
 
         public List<Coupon> Coupons { get; set; }

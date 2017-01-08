@@ -76,7 +76,12 @@
     </form>
     <br />
     <div class="divider"></div>
-    
+
+    @await Html.PartialAsync("_Categories")
+
+    <br />
+    <div class="divider"></div>
+
     @await Html.PartialAsync("_GetAlbums")
 
     <br />

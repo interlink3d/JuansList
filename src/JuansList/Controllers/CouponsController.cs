@@ -67,8 +67,11 @@ namespace JuansList.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCoupons()
         {
+            var User = await GetCurrentUserAsync();
+
             var model = new AllCouponsViewModel();
             model.Coupons = await context.Coupon
+                .Where(v => v.VendorUser == User)
                 .OrderBy(d => d.Title).ToListAsync();
 
             return View(model);

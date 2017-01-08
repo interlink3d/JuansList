@@ -65,6 +65,13 @@ namespace JuansList.Controllers
                 .Where(v => v.VendorUser == User)
                 .OrderBy(a => a.Title).ToListAsync();
 
+            model.Categories = await context.Category
+                .OrderBy(cc => cc.Name).ToListAsync();
+
+            model.VenCat = await context.VendorCategory
+                .Where(v => v.VendorUser == User)
+                .OrderBy(c => c.Category.Name).ToListAsync();
+
 
             return View(model);
         }
@@ -99,6 +106,51 @@ namespace JuansList.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCat(EditVendorProfileViewModel model)
+        {
+          
+
+                var User = await GetCurrentUserAsync();
+
+                List <Category> c = model.Categories.ToList();
+                foreach (Category cat in c)
+                {
+                    // Try to find an Attendee record that matches the EmployeeId and current ProgramId (from loop)
+                    VendorCategory vct = await context.VendorCategory.Where(a => a.VendorUser.Id == User.Id).SingleOrDefaultAsync();
+                    if (vct == null && model.VenCat != null && model.VenCat.Contains(vct))
+                    {
+                        // If a program was selected but no attendee record exists, add one
+                        context.VendorCategory.Add(new VendorCategory { Category = model.Categories.SingleOrDefault(), VendorUser = User });
+                    }
+                    else if (vct != null && model.VenCat != null && !model.VenCat.Contains(vct))
+                    {
+                        // If a program was not selected, but an attendee record exists, remove it
+                        context.VendorCategory.Remove(vct);
+                    }
+                    else if (vct != null && model.VenCat == null)
+                    {
+                        // If a program was not selected, but an attendee record exists, remove it
+                        context.VendorCategory.Remove(vct);
+                    }
+
+
+                await context.SaveChangesAsync();
+            }
+
+            try
+            {
+                return RedirectToAction("Profile", "Vendor");
+            }
+
+            catch (DbUpdateException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+           
         }
     }
 }

@@ -67,6 +67,9 @@ namespace JuansList.Models.AccountViewModels
         public string ProfileImage { get; set; }
 
         [Display(Name = "Company Categories")]
-        public ICollection<VendorCategory> VendorCategories { get; set; } 
+        public ICollection<VendorCategory> VendorCategories { get; set; }
+        
+        [Display(Name = "Categories")]
+        public List<Category> Categories { get; set; } 
     }
 }

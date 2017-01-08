@@ -113,8 +113,11 @@ namespace JuansList.Controllers
         [HttpGet]
         public async Task <IActionResult> GetAlbums()
         {
+            var User = await GetCurrentUserAsync();
+
             var model = new AllAlbumsViewModel();
             model.Albums = await context.Album
+                .Where(v => v.VendorUser == User)
                 .OrderBy(a => a.Title).ToListAsync();
 
             return View();
@@ -187,6 +190,7 @@ namespace JuansList.Controllers
             var model = new AlbumDetailViewModel();
 
             model.SingleAlbum = context.Album
+                .Where(v => v.VendorUser == User)
                 .Where(i => i.AlbumId == id).SingleOrDefault();
 
             model.Images = await context.AlbumImages
