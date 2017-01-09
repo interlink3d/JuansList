@@ -2,18 +2,27 @@
 
 <h2>Categories</h2>
 
-<div class="form-control">
-<div class="input-field col l6 m6 s12">
+<div class="form-group">
+    <label asp-for="CatListing" class="col-md-2 control-label">Select All Categories</label>
+    <div class="col-md-10" style="color: #114B5F;">
+        @Html.ListBoxFor(m => m.CatListing, new MultiSelectList(Model.Categories, "CategoryId", "Name", null), new { @class = "form-control"} )
+    </div>
+</div>
+
+
+@*<div class="input-field col l6 m6 s12">
     <select multiple>
+        <option value="" disabled selected>Choose your option</option>
         @foreach (var c in Model.Categories)
         {
             <option value="@c.CategoryId" class="cat" hidden-id="@c.CategoryId">@Html.DisplayFor(modelItem => c.Name)</option>
         }
     </select>
-</div>
+</div>*@
 
 <br />
-<div class="col m4 ">
-    <a asp-controller="Vendor" asp-action="AddCat" method="post" id="catAdd" class="waves-effect waves-light btn">Save</a>
-</div>
+<div class="form-group">
+    <div class="col m4 ">
+        <a asp-controller="Vendor" asp-action="AddCat" method="post" id="catAdd" class="waves-effect waves-light btn">Save C</a>
+    </div>
 </div>

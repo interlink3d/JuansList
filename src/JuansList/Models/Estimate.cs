@@ -21,10 +21,10 @@ namespace JuansList.Models
         [Required]
         public int? Price { get; set; }
         
-        [Required]
+        
         public DateTime DateStart { get; set; }
         
-        [Required]
+       
         public DateTime DateEnd { get; set; }
         
         [Required]

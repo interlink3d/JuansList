@@ -15,8 +15,7 @@ namespace JuansList.Models
         [Required]
         public VendorUser VendorUser { get; set; }
 
-        //[Required]
-        //public int CategoryId { get; set; }
+        public int CategoryId { get; set; }
 
         public Category Category { get; set; }
 

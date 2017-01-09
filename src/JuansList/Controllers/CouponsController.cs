@@ -55,12 +55,12 @@ namespace JuansList.Controllers
             try
             {
                 context.SaveChanges();
-                return RedirectToAction("Profile", "Vendor");
+                return RedirectToAction("UpdateProfile", "Vendor");
             }
 
             catch (DbUpdateException)
             {
-                return RedirectToAction("AddCoupon", "Coupons");
+                return RedirectToAction("UpdateProfile", "Vendor");
             }
         }
 
@@ -134,7 +134,7 @@ namespace JuansList.Controllers
             if (ModelState.IsValid)
             {
                 context.SaveChanges();
-                return RedirectToAction("GetCoupons", "Coupons");
+                return RedirectToAction("UpdateProfile", "Vendor");
             }
 
             else

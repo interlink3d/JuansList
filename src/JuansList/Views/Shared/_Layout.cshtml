@@ -20,10 +20,10 @@
     </environment>
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
 </head>
-<body>
-    <nav>
+<body style="background-color: #F3E9D2;">
+    <nav style="background-color: #C6DABF;">
         <div class="nav-wrapper">
-            <a asp-area="" asp-controller="Home" asp-action="Index" class="brand-logo left">JuansList</a>
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="brand-logo left" style="color: #114B5F; padding-left: 1em; font-weight: bold;">JuansList</a>
                 @await Html.PartialAsync("_LoginPartial")
         </div>
     </nav>

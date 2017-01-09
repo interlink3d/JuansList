@@ -90,6 +90,7 @@ namespace JuansList.Controllers
             vu.StreetAddress = model.VendorUsers.StreetAddress;
             vu.Zip = model.VendorUsers.Zip;
             vu.ProfileImage = model.VendorUsers.ProfileImage;
+            vu.Website = model.VendorUsers.Website;
 
             if (ModelState.IsValid)
             {
@@ -111,46 +112,58 @@ namespace JuansList.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCat(EditVendorProfileViewModel model)
         {
-          
-
+                
                 var User = await GetCurrentUserAsync();
-
-                List <Category> c = model.Categories.ToList();
-                foreach (Category cat in c)
+            
+                if (ModelState.IsValid)
                 {
-                    // Try to find an Attendee record that matches the EmployeeId and current ProgramId (from loop)
-                    VendorCategory vct = await context.VendorCategory.Where(a => a.VendorUser.Id == User.Id).SingleOrDefaultAsync();
-                    if (vct == null && model.VenCat != null && model.VenCat.Contains(vct))
+                    foreach (int catid in model.CatListing)
                     {
-                        // If a program was selected but no attendee record exists, add one
-                        context.VendorCategory.Add(new VendorCategory { Category = model.Categories.SingleOrDefault(), VendorUser = User });
+                        context.VendorCategory.Add(new VendorCategory { VendorUser = User, CategoryId = catid });
                     }
-                    else if (vct != null && model.VenCat != null && !model.VenCat.Contains(vct))
-                    {
-                        // If a program was not selected, but an attendee record exists, remove it
-                        context.VendorCategory.Remove(vct);
-                    }
-                    else if (vct != null && model.VenCat == null)
-                    {
-                        // If a program was not selected, but an attendee record exists, remove it
-                        context.VendorCategory.Remove(vct);
-                    }
-
-
-                await context.SaveChangesAsync();
-            }
-
-            try
-            {
+                }
+                context.SaveChanges();
                 return RedirectToAction("Profile", "Vendor");
-            }
+            
 
-            catch (DbUpdateException)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            //    var User = await GetCurrentUserAsync();
 
-           
+            //    List <Category> c = model.Categories.ToList();
+            //    foreach (Category cat in c)
+            //    {
+            //        // Try to find an Attendee record that matches the EmployeeId and current ProgramId (from loop)
+            //        VendorCategory vct = await context.VendorCategory.Where(a => a.VendorUser.Id == User.Id).SingleOrDefaultAsync();
+            //        if (vct == null && model.VenCat != null && model.VenCat.Contains(vct))
+            //        {
+            //            // If a program was selected but no attendee record exists, add one
+            //            context.VendorCategory.Add(new VendorCategory { Category = model.Categories.SingleOrDefault(), VendorUser = User });
+            //        }
+            //        else if (vct != null && model.VenCat != null && !model.VenCat.Contains(vct))
+            //        {
+            //            // If a program was not selected, but an attendee record exists, remove it
+            //            context.VendorCategory.Remove(vct);
+            //        }
+            //        else if (vct != null && model.VenCat == null)
+            //        {
+            //            // If a program was not selected, but an attendee record exists, remove it
+            //            context.VendorCategory.Remove(vct);
+            //        }
+
+
+            //    await context.SaveChangesAsync();
+            //}
+
+            //try
+            //{
+            //    return RedirectToAction("Profile", "Vendor");
+            //}
+
+            //catch (DbUpdateException)
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
+
+
         }
     }
 }

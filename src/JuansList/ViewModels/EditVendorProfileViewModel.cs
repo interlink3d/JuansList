@@ -8,10 +8,12 @@ using JuansList.Models;
 
 namespace JuansList.ViewModels
 {
-    public class EditVendorProfileViewModel 
+    public class EditVendorProfileViewModel
     {
 
         public VendorUser VendorUsers { get; set; }
+
+        public int[] CatListing { get; set; }
 
         public List<VendorCategory> VenCat { get; set; }
 
