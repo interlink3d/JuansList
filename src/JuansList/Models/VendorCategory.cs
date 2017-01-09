@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace JuansList.Models
 {
-    public class VendorCategory
+    public class VendorCategory 
     {
         [Key]
         public int VendorCategoryId { get; set; }

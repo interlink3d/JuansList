@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using JuansList.Data;
 using JuansList.Models;
 using JuansList.ViewModels;
+using Microsoft.AspNetCore.Routing;
 
 namespace JuansList.Controllers
 {
@@ -126,50 +127,54 @@ namespace JuansList.Controllers
                 {
                     foreach (int catid in model.CatListing)
                     {
-                        context.VendorCategory.Add(new VendorCategory { VendorUser = User, CategoryId = catid });
+                    VendorCategory vct = (from vc in context.VendorCategory
+                                          where vc.CategoryId == catid && vc.VendorUser == User
+                                          select vc).SingleOrDefault();
+
+                                if (vct == null)
+                                    {
+                                        context.VendorCategory.Add(new VendorCategory { VendorUser = User, CategoryId = catid });
+                                    }
+                                //else if (x.CategoryId == catid)
+                                //    {
+                                        
+                                //    }
+                   
+
+                        //if (vct == null && model.VenCat != null && model.VenCat.Contains(vct.))
+                        //{
+                        //    // If a program was selected but no attendee record exists, add one
+                        //    context.VendorCategory.Add(new VendorCategory { VendorUser = User, CategoryId = catid });
+                        //}
+                        //else if (vct != null && model.VenCat != null && !model.VenCat.Contains(vct))
+                        //{
+                        //    // If a program was not selected, but an attendee record exists, remove it
+                        //    context.VendorCategory.Remove(vct);
+                        //}
+                        //else if (vct != null && model.VenCat == null)
+                        //{
+                        //    // If a program was not selected, but an attendee record exists, remove it
+                        //    context.VendorCategory.Remove(vct);
+                        //}
+
                     }
+
+
                 }
-                context.SaveChanges();
-                return RedirectToAction("Profile", "Vendor");
-            
+                try
+                {
+                    context.SaveChanges();
+                    return View();
+                    //return RedirectToAction("Profile", new RouteValueDictionary(
+                    //new { controller = "Vendor", action = "Profile"}));
 
-            //    var User = await GetCurrentUserAsync();
+            }
 
-            //    List <Category> c = model.Categories.ToList();
-            //    foreach (Category cat in c)
-            //    {
-            //        // Try to find an Attendee record that matches the EmployeeId and current ProgramId (from loop)
-            //        VendorCategory vct = await context.VendorCategory.Where(a => a.VendorUser.Id == User.Id).SingleOrDefaultAsync();
-            //        if (vct == null && model.VenCat != null && model.VenCat.Contains(vct))
-            //        {
-            //            // If a program was selected but no attendee record exists, add one
-            //            context.VendorCategory.Add(new VendorCategory { Category = model.Categories.SingleOrDefault(), VendorUser = User });
-            //        }
-            //        else if (vct != null && model.VenCat != null && !model.VenCat.Contains(vct))
-            //        {
-            //            // If a program was not selected, but an attendee record exists, remove it
-            //            context.VendorCategory.Remove(vct);
-            //        }
-            //        else if (vct != null && model.VenCat == null)
-            //        {
-            //            // If a program was not selected, but an attendee record exists, remove it
-            //            context.VendorCategory.Remove(vct);
-            //        }
-
-
-            //    await context.SaveChangesAsync();
-            //}
-
-            //try
-            //{
-            //    return RedirectToAction("Profile", "Vendor");
-            //}
-
-            //catch (DbUpdateException)
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
-
+                catch (DbUpdateException)
+                {
+                    return RedirectToAction("Index", new RouteValueDictionary(
+                    new { controller = "Home", action = "Index" }));
+            }
 
         }
     }
