@@ -8,6 +8,11 @@
 {
     <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="right">
         <ul class="right">
+            <select class="left">
+                <option value="0">Select A Category</option>
+                <option value="6">Flooring</option>
+                <option value="7">Framing</option>
+            </select>
             <li><a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" style="color: #114B5F;">Hello @UserManager.GetUserName(User)!</a></li>
             <li><a asp-area="" asp-controller="Vendor" asp-action="Profile" class="waves-effect waves-light btn">Profile</a></li>
             <li><a asp-area="" asp-controller="Estimates" asp-action="GetEstimates" class="waves-effect waves-light btn">Estimates</a></li>

@@ -15,7 +15,7 @@
             </div>          
         </div>
 
-            @foreach (var item in Model.Images)
+            @foreach (var item in Model.Images) 
             {
                 <div class="col s6 m3">
                     <img src="@Url.Content(item.ImageUrl)" alt="Image" style="padding-top: 1em; max-width: 200px;" />
@@ -24,7 +24,7 @@
 
     <br />
     <div>
-        <a asp-action="Profile" asp-controller="Vendor">Back to Vendor Profile</a>
+        <a asp-action="Profile" asp-controller="Vendor" class="waves-effect waves-light btn">Back to Vendor Profile</a>
     </div>
 
 </body>
