@@ -53,3 +53,20 @@ textarea {
     height: 275px;
     width: 400px;
 }
+
+.btn {
+    color: #F3E9D2;
+    background-color: #114B5F;
+}
+
+.waves-effect.waves-light .waves-ripple {
+      background-color: rgba(136, 212, 152, 0.65);
+    }
+
+.waves-effect.waves-light:hover {
+      background-color: rgba(17, 75, 95, 0.65);
+    }
+
+.form-control li span{
+    color: #114B5F;
+}

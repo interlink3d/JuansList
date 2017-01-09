@@ -68,8 +68,15 @@
                 </div>
             </div>
             <div class="form-group">
+                <label asp-for="VendorUsers.Website" class="col m2 control-label"></label>
+                <div class="col m10">
+                    <input asp-for="VendorUsers.Website" class="form-control" />
+                    <span asp-validation-for="VendorUsers.Website" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col offset-m2 col m10">
-                    <input type="submit" value="Save" class="btn btn-default" />
+                    <input type="submit" value="Save" class="waves-effect waves-light btn" />
                 </div>
             </div>
         </div>

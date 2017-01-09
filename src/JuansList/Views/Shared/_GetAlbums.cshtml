@@ -7,8 +7,10 @@
 {
     <div class="row">
         <div class="col m2"><a asp-action="AlbumDetail" asp-controller="Albums" asp-route-id="@item.AlbumId">@Html.DisplayFor(modelItem => item.Title)</a></div>
-        <div class="col m1">
-            <a asp-controller="Albums" asp-action="DeleteAlbum" asp-route-id="@item.AlbumId">Delete</a>
+        <div class="col m2">
+            <span class="chip">
+                <a asp-controller="Albums" asp-action="DeleteAlbum" asp-route-id="@item.AlbumId"><i class="close material-icons">close</i>Delete</a>
+            </span>
         </div>
     </div>
 }
@@ -17,3 +19,5 @@
 <div class="col m4 ">
     <a asp-controller="Albums" asp-action="AddAlbum" class="waves-effect waves-light btn">Add Album</a>
 </div>
+<br/>
+<div class="divider"></div>

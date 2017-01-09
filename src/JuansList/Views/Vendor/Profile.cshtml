@@ -10,60 +10,43 @@
 </head>
 <body>
 
-<h4 class="center">Vendor Profile</h4>
-<div class="">
-    <div class="row">
-        <div class="col offset-m1 m4">
+<br/>
+<br/>
+<div class="col l12 z-depth-5" style="background-color: #1A936F; color: #F3E9D2; font-weight: bold;">
+    <br/>
+    <div class="row" style="font-size:20px; ">
+        <div class="col offset-m3 m4">
             <ul>
                 <li>@Html.DisplayFor(model => model.VendorUser.FirstName) @Html.DisplayFor(model => model.VendorUser.LastName)</li>
                 <li>@Html.DisplayFor(model => model.VendorUser.CompanyName)</li>
+                <li><a href="@Url.Content(Model.VendorUser.Website)" target="_blank">@Html.DisplayFor(model => model.VendorUser.Website)</a></li>
                 <li>@Html.DisplayFor(model => model.VendorUser.StreetAddress)</li>
                 <li>@Html.DisplayFor(model => model.VendorUser.City), @Html.DisplayFor(model => model.VendorUser.State) @Html.DisplayFor(model => model.VendorUser.Zip)</li>
             </ul>
         </div>
-        <div class="col m6">
-            <img src="@Url.Content(Model.VendorUser.ProfileImage)" alt="Image" style="padding-top: 1em;" />
+        <div class="col m5">
+            <img src="@Url.Content(Model.VendorUser.ProfileImage)" alt="Image" style="padding-top: 1em; height:150px;" />
         </div>
     </div> 
-    <div class="row">
-        <div class="col offset-m1 m8">@Html.DisplayFor(model => model.VendorUser.Description)</div>
+    <div class="row" >
+        <div class="col offset-m3 m7" style="font-size:20px;">@Html.DisplayFor(model => model.VendorUser.Description)</div>
     </div>
+    <br/>
     <div class="row">
-        <div class="col offset-m1 m4 ">
+        <div class="col offset-m3 m4 ">
             <a asp-controller="Estimates" asp-action="AddEstimate" class="waves-effect waves-light btn">Request Estimate</a>
         </div>
         <div class="col m4 ">
             <a asp-controller="Messages" asp-action="AddMessage" class="waves-effect waves-light btn">Send Message</a>
         </div>
     </div>
+    <br/>
+</div>
     <br />
-    <div class="divider"></div>
     <br />
-    <div class="container">
-        <h4>Coupons!!</h4>
-        <div class="row">    
-            @foreach (var cpn in Model.Coupons)
-            {
-                <div class="row">
-                    <div class="col s12 m6">
-                        <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                                <span class="card-title">@Html.DisplayFor(modelItem => cpn.Title)</span>
-                                <div class="divider"></div>
-                                <p style="padding-top:10px;">
-                                    @Html.DisplayFor(modelItem => cpn.Content)
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
+    <div class="z-depth-5" style="background-color: #114B5F;">
         <br/>
-        <div class="divider"></div>
-        <br/>
-
-        <h4>Albums!</h4>
+        <h4 class="center" style="color: #F3E9D2; font-weight: bold;">Albums!</h4>
         <div>
             @foreach (var alb in Model.Albums)
             {
@@ -84,6 +67,33 @@
 
         </div>
     </div>
-</div>
+
+    <br/>
+    <br/>
+    <div class="z-depth-5" style="background-color: #1A936F;">
+        <br/>
+        <h4 class="center" style="color: #F3E9D2; font-weight: bold;">Coupons!!</h4>
+        <div class="row">    
+            @foreach (var cpn in Model.Coupons)
+            {
+                <div class="row">
+                    <div class="col s12 m6">
+                        <div class="card" style="background-color: #C6DABF;">
+                            <div class="card-content" style="color: #114B5F;">
+                                <span class="card-title">@Html.DisplayFor(modelItem => cpn.Title)</span>
+                                <div class="divider"></div>
+                                <p style="padding-top:10px;">
+                                    @Html.DisplayFor(modelItem => cpn.Content)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <br/>
+    </div>
+    <br/>
+    <br/>
 </body>
 </html>

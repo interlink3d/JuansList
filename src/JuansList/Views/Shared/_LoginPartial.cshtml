@@ -8,12 +8,11 @@
 {
     <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="right">
         <ul class="right">
-            <li><a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a></li>
+            <li><a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" style="color: #114B5F;">Hello @UserManager.GetUserName(User)!</a></li>
             <li><a asp-area="" asp-controller="Vendor" asp-action="Profile" class="waves-effect waves-light btn">Profile</a></li>
             <li><a asp-area="" asp-controller="Estimates" asp-action="GetEstimates" class="waves-effect waves-light btn">Estimates</a></li>
             <li><a asp-area="" asp-controller="Messages" asp-action="GetMessages" class="waves-effect waves-light btn">Messages</a></li>
-            <li><a asp-area="" asp-controller="Coupons" asp-action="GetCoupons" class="waves-effect waves-light btn">Coupons</a></li>
-            <li><button type="submit" class="waves-effect waves-light btn ">Log off</button></li>
+            <li style="padding-right:1em;"><button type="submit" class="waves-effect waves-light btn">Log off</button></li>
         </ul>
     </form>
 }
