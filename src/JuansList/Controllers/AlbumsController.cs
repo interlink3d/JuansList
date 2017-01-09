@@ -146,40 +146,40 @@ namespace JuansList.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateAlbum(AlbumDetailViewModel model, [FromRoute] int id)
-        {
-            ModelState.Remove("SingleAlbum.VendorUser");
-            ModelState.Remove("SingleAlbum.Images");
+        //[HttpPost]
+        //public async Task<IActionResult> UpdateAlbum(AlbumDetailViewModel model, [FromRoute] int id)
+        //{
+        //    ModelState.Remove("SingleAlbum.VendorUser");
+        //    ModelState.Remove("SingleAlbum.Images");
 
-            Album alb = context.Album.Where(i => i.AlbumId == id).SingleOrDefault();
-            //AlbumImages ai = context.AlbumImages.Where(aid => aid.AlbumId == id).ToAsyncEnumerable();
-            List<AlbumImages> ai = model.Images.ToList();
-                //context.AlbumImages.Where(aid => aid.AlbumId == id).ToList();
+        //    Album alb = context.Album.Where(i => i.AlbumId == id).SingleOrDefault();
+        //    //AlbumImages ai = context.AlbumImages.Where(aid => aid.AlbumId == id).ToAsyncEnumerable();
+        //    List<AlbumImages> ai = model.Images.ToList();
+        //        //context.AlbumImages.Where(aid => aid.AlbumId == id).ToList();
 
 
-            if (ModelState.IsValid)
-            {
-                var VendorUser = await GetCurrentUserAsync();
-                alb.VendorUser = VendorUser;
-                alb.Title = model.SingleAlbum.Title;
-                alb.Images = model.Images.ToArray();
+        //    if (ModelState.IsValid)
+        //    {
+        //        var VendorUser = await GetCurrentUserAsync();
+        //        alb.VendorUser = VendorUser;
+        //        alb.Title = model.SingleAlbum.Title;
+        //        alb.Images = model.Images.ToArray();
 
-                context.Add(alb);
-                context.Add(ai);
-            }
+        //        context.Add(alb);
+        //        context.Add(ai);
+        //    }
 
-            try
-            {
-                context.SaveChanges();
-                return RedirectToAction("UpdateProfile", "Vendor");
-            }
+        //    try
+        //    {
+        //        context.SaveChanges();
+        //        return RedirectToAction("UpdateProfile", "Vendor");
+        //    }
 
-            catch (DbUpdateException)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-        }
+        //    catch (DbUpdateException)
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //}
 
 
         [HttpGet]

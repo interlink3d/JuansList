@@ -19,7 +19,7 @@
             <ul>
                 <li>@Html.DisplayFor(model => model.VendorUser.FirstName) @Html.DisplayFor(model => model.VendorUser.LastName)</li>
                 <li>@Html.DisplayFor(model => model.VendorUser.CompanyName)</li>
-                <li><a href="@Url.Content(Model.VendorUser.Website)" target="_blank">@Html.DisplayFor(model => model.VendorUser.Website)</a></li>
+                <li><a href="@Model.VendorUser.Website" target="_blank">Company Website</a></li>
                 <li>@Html.DisplayFor(model => model.VendorUser.StreetAddress)</li>
                 <li>@Html.DisplayFor(model => model.VendorUser.City), @Html.DisplayFor(model => model.VendorUser.State) @Html.DisplayFor(model => model.VendorUser.Zip)</li>
             </ul>
@@ -28,6 +28,15 @@
             <img src="@Url.Content(Model.VendorUser.ProfileImage)" alt="Image" style="padding-top: 1em; height:150px;" />
         </div>
     </div> 
+    <div class="row">
+        <div class="col offset-l3 m8 l8">
+            @foreach (var vc in Model.VenCat)
+            {
+                <p>@Html.DisplayFor(modelItem => vc.Category.Name) - @Html.DisplayFor(modelItem => vc.Category.Description)</p>
+
+            }
+        </div>
+    </div>
     <div class="row" >
         <div class="col offset-m3 m7" style="font-size:20px;">@Html.DisplayFor(model => model.VendorUser.Description)</div>
     </div>
@@ -47,14 +56,15 @@
     <div class="z-depth-5" style="background-color: #114B5F;">
         <br/>
         <h4 class="center" style="color: #F3E9D2; font-weight: bold;">Albums!</h4>
-        <div>
-            @foreach (var alb in Model.Albums)
-            {
-                <div class="row">
-                    <div class="col s12 m6">
+        <div class="row">
+            <div class="col l12">
+                @foreach (var alb in Model.Albums)
+                {
+                    
+                    <div class="col s8 m8 l6">
                         <div class="card">
                             <div class="card-image">
-                                <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRaQ_K_YOhHooeEXxp2CrYa8hOMQIDEOudYg2iHnFgwIlJACsQq" style="max-height: 200px;">
+                                <img src="@alb.Images[0].ImageUrl" style="max-height: 200px;">
                                 <span class="card-title">@Html.DisplayFor(modelItem => alb.Title)</span>
                             </div>
                             <div class="card-action">
@@ -62,22 +72,25 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            }
-
+                }
+                <br />
+            </div>
+            <br/>
         </div>
+        <br />
     </div>
 
     <br/>
     <br/>
     <div class="z-depth-5" style="background-color: #1A936F;">
         <br/>
-        <h4 class="center" style="color: #F3E9D2; font-weight: bold;">Coupons!!</h4>
-        <div class="row">    
-            @foreach (var cpn in Model.Coupons)
-            {
-                <div class="row">
-                    <div class="col s12 m6">
+        <h4 class="center" style="color: #F3E9D2; font-weight: bold;">Specials!</h4>
+        <div class="row"> 
+            <div class="col l12">
+                @foreach (var cpn in Model.Coupons)
+                {
+
+                    <div class="col s8 m8 l6 center">
                         <div class="card" style="background-color: #C6DABF;">
                             <div class="card-content" style="color: #114B5F;">
                                 <span class="card-title">@Html.DisplayFor(modelItem => cpn.Title)</span>
@@ -88,8 +101,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+
+                }
+            </div>
         </div>
         <br/>
     </div>

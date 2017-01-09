@@ -44,7 +44,14 @@ namespace JuansList.Controllers
 
             model.Albums = await context.Album
                 .Where(v => v.VendorUser == User)
+                .Include(ai => ai.Images)
                 .OrderBy(a => a.Title).ToListAsync();
+
+            model.VenCat = await context.VendorCategory
+                .Where(v => v.VendorUser == User)
+                .Include(cat => cat.Category)
+                .OrderBy(c => c.Category.Name).ToListAsync();
+
 
 
             return View(model);
@@ -110,9 +117,9 @@ namespace JuansList.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCat(EditVendorProfileViewModel model)
+        public async Task<IActionResult> AddCat(EditVendorProfileViewModel model, [FromBody] int [] cat)
         {
-                
+                model.CatListing = cat;
                 var User = await GetCurrentUserAsync();
             
                 if (ModelState.IsValid)
