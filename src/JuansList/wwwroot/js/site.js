@@ -38,6 +38,6 @@
             contentType: 'application/json; charset=utf-8'
         }).done((n) => {
             })
-    }
+    })
 
 });

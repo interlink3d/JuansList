@@ -32,6 +32,8 @@ namespace JuansList.Controllers
 
         // This task retrieves the currently authenticated user
         private Task<VendorUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
+        [HttpGet]
         public async Task<IActionResult> Profile()
         {
             var User = await GetCurrentUserAsync();
@@ -131,51 +133,28 @@ namespace JuansList.Controllers
                                           where vc.CategoryId == catid && vc.VendorUser == User
                                           select vc).SingleOrDefault();
 
-                                if (vct == null)
-                                    {
-                                        context.VendorCategory.Add(new VendorCategory { VendorUser = User, CategoryId = catid });
-                                    }
-                                //else if (x.CategoryId == catid)
-                                //    {
-                                        
-                                //    }
-                   
-
-                        //if (vct == null && model.VenCat != null && model.VenCat.Contains(vct.))
-                        //{
-                        //    // If a program was selected but no attendee record exists, add one
-                        //    context.VendorCategory.Add(new VendorCategory { VendorUser = User, CategoryId = catid });
-                        //}
-                        //else if (vct != null && model.VenCat != null && !model.VenCat.Contains(vct))
-                        //{
-                        //    // If a program was not selected, but an attendee record exists, remove it
-                        //    context.VendorCategory.Remove(vct);
-                        //}
-                        //else if (vct != null && model.VenCat == null)
-                        //{
-                        //    // If a program was not selected, but an attendee record exists, remove it
-                        //    context.VendorCategory.Remove(vct);
-                        //}
-
+                            if (vct == null)
+                                {
+                                    context.VendorCategory.Add(new VendorCategory { VendorUser = User, CategoryId = catid });
+                                }
                     }
 
 
                 }
                 try
                 {
-                    context.SaveChanges();
+                    await context.SaveChangesAsync();
                     return View();
                     //return RedirectToAction("Profile", new RouteValueDictionary(
                     //new { controller = "Vendor", action = "Profile"}));
 
-            }
+                }
 
                 catch (DbUpdateException)
                 {
                     return RedirectToAction("Index", new RouteValueDictionary(
                     new { controller = "Home", action = "Index" }));
-            }
-
+                }
         }
     }
 }
