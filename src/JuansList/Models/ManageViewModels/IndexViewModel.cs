@@ -17,5 +17,11 @@ namespace JuansList.Models.ManageViewModels
         public bool TwoFactor { get; set; }
 
         public bool BrowserRemembered { get; set; }
+
+        public VendorUser VendorUser { get; set; }
+
+        public CustomerUser CustomerUser { get; set; }
+
+        public ApplicationUser currentUser { get; set; }
     }
 }
