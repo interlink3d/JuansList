@@ -30,14 +30,10 @@
         })
     });
 
-    $("listcat").on("change", function (e) {
-        $.ajax({
-            url: `/Customer/Search/${$(this).val()}`,
-            method: "POST",
-            dataType: "json",
-            contentType: 'application/json; charset=utf-8'
-        }).done((n) => {
-            })
-    }
+    $(".listcat").on("change", function (e) {
+        if ($(this).val()) {
+            window.location = `/Customer/Search/${$(this).val()}`
+        }
+    })
 
 });

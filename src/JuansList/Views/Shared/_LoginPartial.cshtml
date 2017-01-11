@@ -1,31 +1,54 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using JuansList.Models
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<VendorUser> SignInManager
+@inject UserManager<VendorUser> UserManager
 
-@if (SignInManager.IsSignedIn(User))
-{
-    <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="right">
+@inject SignInManager<CustomerUser> SignInManager2
+@inject UserManager<CustomerUser> UserManager2
+
+
+    
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="right">
+            <ul class="right">
+                <li><a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" style="color: #114B5F;">Hello @UserManager.GetUserName(User)!</a></li>
+                <li><a asp-area="" asp-controller="Vendor" asp-action="Profile" class="waves-effect waves-light btn">Profile</a></li>
+                <li><a asp-area="" asp-controller="Estimates" asp-action="GetEstimates" class="waves-effect waves-light btn">Estimates</a></li>
+                <li><a asp-area="" asp-controller="Messages" asp-action="GetMessages" class="waves-effect waves-light btn">Messages</a></li>
+                <li style="padding-right:1em;"><button type="submit" class="waves-effect waves-light btn">Log off</button></li>
+            </ul>
+        </form>
+    }
+
+
+    @if (SignInManager2.IsSignedIn(User))
+    {
+        <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" class="right" id="logoutForm">
+            <ul class="right">
+                    <select class="left listcat" style="color: #114B5F;">
+                        <option value="0" style="color: #114B5F;">Select A Category</option>
+                        <option value="6" style="color: #114B5F;">Flooring</option>
+                        <option value="7" style="color: #114B5F;">Framing</option>
+                        <option value="4" style="color: #114B5F;">Gutters</option>
+                        <option value="5" style="color: #114B5F;">Lawncare</option>
+                        <option value="9" style="color: #114B5F;">Painting</option>
+                        <option value="1" style="color: #114B5F;">Roofing</option>
+                        <option value="2" style="color: #114B5F;">Siding</option>
+                        <option value="8" style="color: #114B5F;">Windows</option>
+                    </select>
+                <li><a asp-area="" asp-controller="Customer" asp-action="Profile" class="waves-effect waves-light btn">Profile</a></li>
+                <li style="padding-right:1em;"><button type="submit" class="waves-effect waves-light btn">Log off</button></li>
+            </ul>
+        </form>
+    }
+
+    else
+    {
         <ul class="right">
-            <select class="left">
-                <option value="0">Select A Category</option>
-                <option value="6">Flooring</option>
-                <option value="7">Framing</option>
-            </select>
-            <li><a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" style="color: #114B5F;">Hello @UserManager.GetUserName(User)!</a></li>
-            <li><a asp-area="" asp-controller="Vendor" asp-action="Profile" class="waves-effect waves-light btn">Profile</a></li>
-            <li><a asp-area="" asp-controller="Estimates" asp-action="GetEstimates" class="waves-effect waves-light btn">Estimates</a></li>
-            <li><a asp-area="" asp-controller="Messages" asp-action="GetMessages" class="waves-effect waves-light btn">Messages</a></li>
-            <li style="padding-right:1em;"><button type="submit" class="waves-effect waves-light btn">Log off</button></li>
+            <li><a asp-area="" asp-controller="Account" asp-action="VendorRegister" class="waves-effect waves-light btn">Vendor Registration</a></li>
+            <li><a asp-area="" asp-controller="Account" asp-action="CustomerRegister" class="waves-effect waves-light btn">Customer Registration</a></li>
+            <li><a asp-area="" asp-controller="Account" asp-action="Login" class="waves-effect waves-light btn">Log in</a></li>
         </ul>
-    </form>
-}
-else
-{
-    <ul class="right">
-        <li><a asp-area="" asp-controller="Account" asp-action="VendorRegister" class="waves-effect waves-light btn">Vendor Registration</a></li>
-        <li><a asp-area="" asp-controller="Account" asp-action="CustomerRegister" class="waves-effect waves-light btn">Customer Registration</a></li>
-        <li><a asp-area="" asp-controller="Account" asp-action="Login" class="waves-effect waves-light btn">Log in</a></li>
-    </ul>
-}
+    }

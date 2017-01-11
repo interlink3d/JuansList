@@ -101,6 +101,8 @@ namespace JuansList.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateMessage(Message SingleMessage, [FromRoute] int id)
         {
+            ModelState.Remove("VendorUser");
+
             Message msg = context.Message.Where(i => i.MessageId == id).SingleOrDefault();
 
             msg.VendorUser = await GetCurrentUserAsync();

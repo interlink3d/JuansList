@@ -25,7 +25,8 @@
         </div>
         <div class="form-group">
             <label asp-for="SingleEstimate.Description" class="col m2 control-label"></label>
-            <div class="col m10">
+            
+            <div class="col m10 l10">
                 <input asp-for="SingleEstimate.Description" class="form-control" />
                 <span asp-validation-for="SingleEstimate.Description" class="text-danger" />
             </div>
@@ -53,15 +54,15 @@
         </div>
         <div class="form-group">
             <div class="col offset-m2 col m10">
-                <button type="submit" value="Save" class="btn btn-default">Save</button>
+                <button type="submit" value="Save" class="waves-effect waves-light btn">Save</button>
             </div>
         </div>
     </div>
 </form>
 <br />
-<div>
-    <a asp-action="GetEstimates">Back to List</a>
-</div>
+@*<div>
+    <a asp-action="GetEstimates" asp-controller="Estimates" class="waves-effect waves-light btn">Back to List</a>
+</div>*@
 
 </body>
 </html>

@@ -1,0 +1,97 @@
+﻿@model JuansList.ViewModels.CustomerProfileViewModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Customer Profile</title>
+</head>
+<body>
+
+    <br />
+    <br />
+    <div class="col l12 z-depth-5" style="background-color: #114B5F; color: #F3E9D2; font-weight: bold;">
+        <br />
+        <div class="row" style="font-size:20px; ">
+            <div class="col offset-m3 m4">
+                <ul>
+                    <li>@Html.DisplayFor(model => model.CustomerUser.FirstName) @Html.DisplayFor(model => model.CustomerUser.LastName)</li>
+                    <li>@Html.DisplayFor(model => model.CustomerUser.StreetAddress)</li>
+                    <li>@Html.DisplayFor(model => model.CustomerUser.City), @Html.DisplayFor(model => model.CustomerUser.State) @Html.DisplayFor(model => model.CustomerUser.Zip)</li>
+                </ul>
+            </div>
+            <div class="col m5">
+                <img src="@Url.Content(Model.CustomerUser.ProfileImage)" alt="Image" style="padding-top: 1em; height:150px;" />
+            </div>
+        </div>
+        <br />
+        <br />
+    </div>
+    <br />
+    <br />
+    <div class="z-depth-5" style="background-color: #1A936F; color: #F3E9D2;">
+        <br />
+        <h4 class="center" style="color: #F3E9D2; font-weight: bold;">Messages</h4>
+            <div class="row">
+                <div class="col m6">Message</div>
+                <div class="col m1">Sent On</div>
+            </div>
+
+            @foreach (var item in Model.messages)
+            {
+                <div class="row">
+                    <div class="col m6"><a asp-action="MessageDetail" asp-controller="Messages" asp-route-id="@item.MessageId" style="color: #F3E9D2;">@Html.DisplayFor(modelItem => item.Text)</a></div>
+                    <div class="col m3">@Html.DisplayFor(modelItem => item.DateStamp)</div>
+                    <div class="col m2">
+                        <span class="chip">
+                            <a asp-controller="Messages" asp-action="DeleteMessage" asp-route-id="@item.MessageId"><i class="close material-icons">close</i>Delete</a>
+                        </span>
+                    </div>
+                </div>
+            }
+            <br />
+    </div>
+
+    <br />
+
+    <div class="z-depth-5" style="background-color: #114B5F; color: #F3E9D2;">
+        <br />
+        <h4 class="center" style="color: #F3E9D2; font-weight: bold;">Estimates</h4>
+        <div class="row">
+            <div class="col l12">
+                <div class="row">
+                    <div class="col m2">Title</div>
+                    <div class="col m3">Description</div>
+                    <div class="col m1">Price</div>
+                    <div class="col m2">Start Date</div>
+                    <div class="col m2">End Date</div>
+                </div>
+
+                @foreach (var item in Model.estimates)
+                {
+                    <div class="row">
+                        <div class="col m2"><a asp-action="EstimateDetail" asp-controller="Estimates" asp-route-id="@item.EstimateId" style="color: #F3E9D2;">@Html.DisplayFor(modelItem => item.Title)</a></div>
+                        <div class="col m3">@Html.DisplayFor(modelItem => item.Description)</div>
+                        <div class="col m1">$@Html.DisplayFor(modelItem => item.Price)</div>
+                        <div class="col m2">@Html.DisplayFor(modelItem => item.DateStart)</div>
+                        <div class="col m2">@Html.DisplayFor(modelItem => item.DateEnd)</div>
+                        <div class="col m2">
+                            <span class="chip">
+                                <a asp-controller="Estimates" asp-action="DeleteEstimate" asp-route-id="@item.EstimateId"><i class="close material-icons">close</i>Delete</a>
+                            </span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <br />
+    </div>
+        <br />
+    </div>
+
+    <br />
+  
+</body>
+</html>

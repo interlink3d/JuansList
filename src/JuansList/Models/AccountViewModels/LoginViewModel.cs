@@ -18,5 +18,6 @@ namespace JuansList.Models.AccountViewModels
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
     }
 }
