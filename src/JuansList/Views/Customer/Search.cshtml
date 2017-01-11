@@ -1,0 +1,55 @@
+﻿@model JuansList.ViewModels.SearchViewModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Vendor Search</title>
+</head>
+<body>
+
+    <br />
+    <br />
+    
+    <div class="z-depth-5" style="background-color: #1A936F;">
+        <br />
+        <h4 class="center" style="color: #F3E9D2; font-weight: bold;">Choose Your Vendor</h4>
+        <div class="row">
+           
+                @foreach (var ven in Model.vendors)
+                {
+                    
+                        <div class="col s8 m8 l5">
+                            <div class="row" style="background-color: #C6DABF;">
+                                <div class="col l4 center" style="color: #114B5F; font-weight: bold; font-size:20px;">
+                                    <p class="">@Html.DisplayFor(modelItem => ven.CompanyName)</p>
+                                </div>
+                                <div class="col l4 center">
+                                    <img class="center" src="@ven.ProfileImage">
+                                </div>
+                                <div class="divider"></div>
+                            </div>
+                            <div class="row">
+                                <p style="padding-top:10px;">
+                                    @*@foreach (var vc in Model.categories)
+                                    {
+                                        @Html.DisplayFor(modelItem => vc.Category.Name) @Html.DisplayFor(modelItem => vc.Category.Description)
+
+                                    }*@
+                                </p>
+                            </div>
+
+                        </div>
+                    
+                }
+            </div>
+        </div>
+        <br />
+    </div>
+
+    <br />
+
+</body>
+</html>

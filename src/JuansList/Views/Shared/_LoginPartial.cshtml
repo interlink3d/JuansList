@@ -9,7 +9,7 @@
 
 
     
-    @*@if (SignInManager.IsSignedIn(User))
+    @if (SignInManager.IsSignedIn(User))
     {
         <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="right">
             <ul class="right">
@@ -20,14 +20,14 @@
                 <li style="padding-right:1em;"><button type="submit" class="waves-effect waves-light btn">Log off</button></li>
             </ul>
         </form>
-    }*@
+    }
 
 
     @if (SignInManager2.IsSignedIn(User))
     {
         <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" class="right" id="logoutForm">
             <ul class="right">
-                    <select class="left" style="color: #114B5F;">
+                    <select class="left listcat" style="color: #114B5F;">
                         <option value="0" style="color: #114B5F;">Select A Category</option>
                         <option value="6" style="color: #114B5F;">Flooring</option>
                         <option value="7" style="color: #114B5F;">Framing</option>

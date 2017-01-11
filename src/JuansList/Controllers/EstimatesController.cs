@@ -102,6 +102,8 @@ namespace JuansList.Controllers
         [HttpPost]
         public async Task <IActionResult> UpdateEstimate(Estimate SingleEstimate, [FromRoute] int id)
         {
+            ModelState.Remove("VendorUser");
+
             Estimate est = context.Estimate.Where(i => i.EstimateId == id).SingleOrDefault();
 
             est.VendorUser = await GetCurrentUserAsync();

@@ -37,7 +37,6 @@ namespace JuansList.Controllers
         public async Task<IActionResult> Profile()
         {
             var User = await GetCurrentUserAsync();
-            var CustomerUID = User.Id;
 
             var model = new CustomerProfileViewModel();
             model.CustomerUser = User;
@@ -45,6 +44,27 @@ namespace JuansList.Controllers
             model.estimates = await context.Estimate.ToListAsync();
 
             model.messages = await context.Message.ToListAsync();
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search([FromRoute] int id)
+        {
+            var user = await GetCurrentUserAsync();
+
+            var model = new SearchViewModel();
+
+            model.vendors = await context.VendorUser
+                .Include(vcg => vcg.VendorCategories)
+                .Where(v => v.VendorCategories.FirstOrDefault().CategoryId == id)
+                .ToListAsync();
+
+            //model.categories =
+            //                    (from vc in context.VendorCategory
+            //                     where vc.CategoryId == id
+            //                     join c in context.Category on vc.CategoryId == c.CategoryId
+            //                     select vc).ToListAsync();
 
             return View(model);
         }
