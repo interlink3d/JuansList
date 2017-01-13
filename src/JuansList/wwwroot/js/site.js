@@ -6,6 +6,10 @@
 
     $('select').material_select();
 
+    $('.slider').slider(
+
+        );
+   
 
     function catt() {
         return new Promise(function (resolve, reject) {

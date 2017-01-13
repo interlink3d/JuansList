@@ -8,20 +8,23 @@
     <title>View Album</title>
 </head>
 <body>
+    <br />
+    <br/>
+    <div class="container" style="background-color: #C6DABF;">
+        <div class="row center">
+            <div class="slider col offset-l1 l10 center">
+                <ul class="slides">
 
-        <div class="row">
-            <div>
-                <h3>@Html.DisplayFor(model => model.SingleAlbum.Title)</h3>
-            </div>          
-        </div>
-
-            @foreach (var item in Model.Images) 
+                    @foreach (var item in Model.Images)
             {
-                <div class="col s6 m3">
-                    <img src="@Url.Content(item.ImageUrl)" alt="Image" style="padding-top: 1em; max-width: 200px;" />
-                </div>
-            }
-
+                        <li class="center" style="background-color:#C6DABF; padding-top:40px;">
+                            <img src="@Url.Content(item.ImageUrl)" style="height: 50vh; width:50vw;">
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
     <br />
     <div>
         <a asp-action="Profile" asp-controller="Vendor" class="waves-effect waves-light btn">Back to Vendor Profile</a>
